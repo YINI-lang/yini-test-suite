@@ -14,7 +14,12 @@ from yini_test.discovery import (
     get_expected_json_path,
 )
 from yini_test.models import CaseResult, InvalidCase, ValidCase
-from yini_test.runner import run_suite_matrix, _resolve_suite_names
+from yini_test.runner import (
+    format_adapter_name,
+    format_summary_rule,
+    run_suite_matrix,
+    _resolve_suite_names,
+)
 
 
 def test_get_expected_json_path_returns_matching_json_path(tmp_path: Path) -> None:
@@ -313,4 +318,106 @@ def test_run_suite_matrix_runs_groups_in_suite_then_mode_order(
         ("golden", "lenient"),
         ("golden", "strict"),
     ]
+    assert "YINI Test Summary" in output
+    assert "Adapter: adapter" in output
+    assert "smoke    lenient" in output
+    assert "golden   strict" in output
+    assert "Result: PASS" in output
     assert "Summary: 4 passed, 0 failed, 4 total" in output
+
+
+def test_run_suite_matrix_summary_lists_failed_groups(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    # Arrange.
+    def fake_run_case_group(
+        suite_name: str,
+        mode: str,
+        cases_root: Path,
+        adapter_tokens: list[str],
+        fail_fast: bool = False,
+    ) -> list[CaseResult]:
+        if suite_name == "golden" and mode == "strict":
+            return [
+                CaseResult(
+                    case_path=tmp_path / "failing.yini",
+                    passed=False,
+                    message="Expected failure",
+                )
+            ]
+
+        return [
+            CaseResult(
+                case_path=tmp_path / f"{suite_name}-{mode}.yini",
+                passed=True,
+            )
+        ]
+
+    monkeypatch.setattr("yini_test.runner.run_case_group", fake_run_case_group)
+
+    # Act.
+    exit_code = run_suite_matrix(
+        suite="all",
+        modes=["lenient", "strict"],
+        cases_root=tmp_path,
+        adapter_tokens=[
+            "node",
+            "../yini-parser-typescript/dist-tools/tools/yini-test-adapter.js",
+            "--input",
+            "{input}",
+            "--mode",
+            "{mode}",
+        ],
+    )
+
+    # Assert.
+    output = capsys.readouterr().out
+
+    assert exit_code == 1
+    assert "Adapter: yini-parser-typescript" in output
+    assert "Summary: 3 passed, 1 failed, 4 total" in output
+    assert "Result: FAIL" in output
+    assert "Failed groups:" in output
+    assert "- golden / strict: 1 failed" in output
+
+
+def test_format_adapter_name_prefers_yini_parser_repository_name() -> None:
+    # Arrange.
+    adapter_tokens = [
+        "node",
+        "../yini-parser-typescript/dist-tools/tools/yini-test-adapter.js",
+        "--input",
+        "{input}",
+    ]
+
+    # Act.
+    adapter_name = format_adapter_name(adapter_tokens)
+
+    # Assert.
+    assert adapter_name == "yini-parser-typescript"
+
+
+def test_format_adapter_name_uses_script_name_after_runner_command() -> None:
+    # Arrange.
+    adapter_tokens = [
+        "python",
+        "tools/custom_adapter.py",
+        "--input",
+        "{input}",
+    ]
+
+    # Act.
+    adapter_name = format_adapter_name(adapter_tokens)
+
+    # Assert.
+    assert adapter_name == "custom_adapter"
+
+
+def test_format_summary_rule_falls_back_for_limited_terminal_encoding() -> None:
+    # Act.
+    summary_rule = format_summary_rule("cp1252")
+
+    # Assert.
+    assert summary_rule == "-" * 40

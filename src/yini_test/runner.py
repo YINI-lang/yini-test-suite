@@ -8,7 +8,9 @@ expected-output loading, and diff formatting live in dedicated helper modules.
 # src/yini_test/runner.py
 from __future__ import annotations
 
+from dataclasses import dataclass
 from pathlib import Path
+import sys
 import time
 
 # Remember this importing order:
@@ -36,6 +38,23 @@ from yini_test.expectations import (
 from yini_test.models import CaseResult, InvalidCase, ValidCase, WarningCase
 from yini_test.utils.executables import resolve_executable
 from yini_test.utils.formatting import format_duration
+
+
+SUMMARY_RULE = "─" * 40
+SUMMARY_RULE_FALLBACK = "-" * 40
+
+
+@dataclass(frozen=True, slots=True)
+class GroupSummary:
+    suite_name: str
+    mode: str
+    passed: int
+    failed: int
+    duration: float
+
+    @property
+    def total(self) -> int:
+        return self.passed + self.failed
 
 
 def run_suite(
@@ -116,6 +135,7 @@ def run_case_groups(
     started_at = time.perf_counter()
     total_passed = 0
     total_failed = 0
+    group_summaries: list[GroupSummary] = []
 
     """
     @TODO 2026-05:
@@ -133,6 +153,7 @@ def run_case_groups(
             print()
             print(f"Group: {suite_name} / {mode}")
 
+        group_started_at = time.perf_counter()
         results = run_case_group(
             suite_name=suite_name,
             mode=mode,
@@ -140,6 +161,7 @@ def run_case_groups(
             adapter_tokens=adapter_tokens,
             fail_fast=fail_fast,
         )
+        group_duration = time.perf_counter() - group_started_at
 
         for result in results:
             label = "PASS" if result.passed else "FAIL"
@@ -155,19 +177,151 @@ def run_case_groups(
         total_passed += passed
         total_failed += failed
 
+        group_summaries.append(
+            GroupSummary(
+                suite_name=suite_name,
+                mode=mode,
+                passed=passed,
+                failed=failed,
+                duration=group_duration,
+            )
+        )
+
         if fail_fast and failed > 0:
             break
 
     total = total_passed + total_failed
     duration = time.perf_counter() - started_at
 
+    print_summary(
+        adapter_name=format_adapter_name(adapter_tokens),
+        group_summaries=group_summaries,
+        total_passed=total_passed,
+        total_failed=total_failed,
+        total=total,
+        duration=duration,
+    )
+
+    return 0 if total_failed == 0 else 1
+
+
+def print_summary(
+    adapter_name: str,
+    group_summaries: list[GroupSummary],
+    total_passed: int,
+    total_failed: int,
+    total: int,
+    duration: float,
+) -> None:
+    """
+    Print the terminal summary table for a completed run.
+    """
+
+    print()
+    summary_rule = format_summary_rule()
+
+    print(summary_rule)
+    print("YINI Test Summary")
+    print(f"Adapter: {adapter_name}")
+    print()
+    print(
+        f"{'Suite':<9}{'Mode':<9}{'Passed':>6}{'Failed':>8}{'Total':>7}{'Duration':>10}"
+    )
+
+    for group_summary in group_summaries:
+        print(
+            f"{group_summary.suite_name:<9}"
+            f"{group_summary.mode:<9}"
+            f"{group_summary.passed:>6}"
+            f"{group_summary.failed:>8}"
+            f"{group_summary.total:>7}"
+            f"{format_duration(group_summary.duration):>10}"
+        )
+
+    print()
+    print(
+        f"{'Total':<18}"
+        f"{total_passed:>6}"
+        f"{total_failed:>8}"
+        f"{total:>7}"
+        f"{format_duration(duration):>10}"
+    )
     print()
     print(
         f"Summary: {total_passed} passed, {total_failed} failed, "
         f"{total} total, duration {format_duration(duration)}"
     )
+    print()
+    print(f"Result: {'PASS' if total_failed == 0 else 'FAIL'}")
 
-    return 0 if total_failed == 0 else 1
+    failed_groups = [
+        group_summary for group_summary in group_summaries if group_summary.failed > 0
+    ]
+
+    if failed_groups:
+        print()
+        print("Failed groups:")
+
+        for group_summary in failed_groups:
+            print(
+                f"- {group_summary.suite_name} / {group_summary.mode}: "
+                f"{group_summary.failed} failed"
+            )
+
+
+def format_summary_rule(stream_encoding: str | None = None) -> str:
+    """
+    Return the preferred summary rule when the terminal can encode it.
+    """
+
+    encoding = stream_encoding or sys.stdout.encoding or "utf-8"
+
+    try:
+        SUMMARY_RULE.encode(encoding)
+    except (LookupError, UnicodeEncodeError):
+        return SUMMARY_RULE_FALLBACK
+
+    return SUMMARY_RULE
+
+
+def format_adapter_name(adapter_tokens: list[str]) -> str:
+    """
+    Return a compact adapter name suitable for summary output.
+    """
+
+    if not adapter_tokens:
+        return "(none)"
+
+    for token in adapter_tokens:
+        parts = token.replace("\\", "/").split("/")
+
+        for part in parts:
+            if part.startswith("yini-parser-"):
+                return part
+
+    known_runners = {
+        "bun",
+        "deno",
+        "node",
+        "npx",
+        "py",
+        "python",
+        "python3",
+    }
+
+    candidates = [
+        token
+        for token in adapter_tokens
+        if token and not token.startswith("-") and "{" not in token
+    ]
+
+    for token in candidates:
+        name = Path(token).stem or token
+
+        if name.lower() not in known_runners:
+            return name
+
+    return Path(adapter_tokens[0]).stem or adapter_tokens[0]
 
 
 def run_case_group(
