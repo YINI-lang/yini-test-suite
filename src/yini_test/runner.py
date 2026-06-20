@@ -240,18 +240,9 @@ def print_summary(
 
     print()
     print(
-        f"{'Total':<18}"
-        f"{total_passed:>6}"
-        f"{total_failed:>8}"
-        f"{total:>7}"
-        f"{format_duration(duration):>10}"
-    )
-    print()
-    print(
         f"Summary: {total_passed} passed, {total_failed} failed, "
         f"{total} total, duration {format_duration(duration)}"
     )
-    print()
     print(f"Result: {'PASS' if total_failed == 0 else 'FAIL'}")
 
     failed_groups = [
