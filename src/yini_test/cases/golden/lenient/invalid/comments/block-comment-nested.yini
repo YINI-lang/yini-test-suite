@@ -1,0 +1,5 @@
+@yini
+
+^ Application
+name = "lenient-block-comment-nested"
+/* outer /* inner */ still-outer */

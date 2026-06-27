@@ -1,0 +1,6 @@
+@yini
+
+^ Application
+--name = "disabled"
+name = "lenient-disable-line-basic"
+enabled = true

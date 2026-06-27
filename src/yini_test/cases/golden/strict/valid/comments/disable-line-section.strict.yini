@@ -1,0 +1,8 @@
+@yini strict
+
+--^ Disabled
+^ Application
+name = "strict-disable-line-section"
+enabled = true
+
+/END

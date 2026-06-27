@@ -1,0 +1,8 @@
+@yini
+
+^ Application
+name = "lenient-disable-line-mixed"
+--version = "disabled"
+enabled = true
+--debug = true
+description = "active value"

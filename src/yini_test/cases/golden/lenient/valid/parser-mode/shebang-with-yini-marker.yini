@@ -1,0 +1,7 @@
+#!/usr/bin/env yini
+@yini
+
+^ App
+name = "shebang-with-yini-marker"
+mode = "lenient"
+enabled = true

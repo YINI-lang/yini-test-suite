@@ -1,0 +1,6 @@
+@yini strict
+
+^ Keys
+my-key = "val"
+
+/END

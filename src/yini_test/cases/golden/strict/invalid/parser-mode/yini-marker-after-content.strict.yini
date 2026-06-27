@@ -1,0 +1,7 @@
+^ App
+name = "yini-marker-after-content"
+mode = "strict"
+
+@yini
+
+/END

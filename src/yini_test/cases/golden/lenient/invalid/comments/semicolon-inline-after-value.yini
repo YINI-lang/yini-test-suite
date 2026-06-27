@@ -1,0 +1,4 @@
+@yini
+
+^ Application
+name = "lenient-semicolon-inline-after-value" ; Semicolon is not an inline comment marker.

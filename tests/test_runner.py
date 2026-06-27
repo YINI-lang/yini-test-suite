@@ -321,7 +321,7 @@ def test_run_suite_matrix_runs_groups_in_suite_then_mode_order(
     ]
     assert "YINI Test Suite Summary" in output
     assert "Adapter: adapter" in output
-    assert "yini-test-suite: 0.2.0" in output
+    assert "yini-test-suite: 0.3.0" in output
     assert "Test suite: all" in output
     assert "YINI spec: 2026-06-draft" in output
     assert "smoke    lenient" in output
@@ -381,7 +381,7 @@ def test_run_suite_matrix_summary_lists_failed_groups(
 
     assert exit_code == 1
     assert "Adapter: yini-parser-typescript" in output
-    assert "yini-test-suite: 0.2.0" in output
+    assert "yini-test-suite: 0.3.0" in output
     assert "Test suite: all" in output
     assert "YINI spec: 2026-06-draft" in output
     assert "Summary: 3 passed, 1 failed, 4 total" in output

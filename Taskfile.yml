@@ -17,6 +17,8 @@ tasks:
 
   help:
     desc: Show yini-test-suite CLI help
+    env:
+      PYTHONPATH: src
     cmds:
       - python -m yini_test --help
 
@@ -85,16 +87,22 @@ tasks:
 
   run-smoke-typescript-lenient:
     desc: Run lenient smoke cases against yini-parser-typescript
+    env:
+      PYTHONPATH: src
     cmds:
       - python -m yini_test smoke --cases-root {{.PATH_CASES}} --adapter node ../yini-parser-typescript/dist-tools/tools/yini-test-adapter.js --input {input} --mode {mode}
 
   run-smoke-typescript-strict:
     desc: Run strict smoke cases against yini-parser-typescript
+    env:
+      PYTHONPATH: src
     cmds:
       - python -m yini_test smoke --strict --cases-root {{.PATH_CASES}} --adapter node ../yini-parser-typescript/dist-tools/tools/yini-test-adapter.js --input {input} --mode {mode}
 
   run-all-typescript:
     desc: Run smoke and golden cases in lenient and strict mode against yini-parser-typescript
+    env:
+      PYTHONPATH: src
     cmds:
       - python -m yini_test all --all-modes --cases-root {{.PATH_CASES}} --adapter node ../yini-parser-typescript/dist-tools/tools/yini-test-adapter.js --input {input} --mode {mode}
 

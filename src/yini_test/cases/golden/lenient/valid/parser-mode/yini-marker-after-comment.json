@@ -1,0 +1,7 @@
+{
+  "App": {
+    "name": "yini-marker-after-comment",
+    "mode": "lenient",
+    "enabled": true
+  }
+}

@@ -1,0 +1,5 @@
+@yini
+
+^ Application
+name = /* ignored block comment */ "lenient-block-comment-inline-within-value"
+enabled = true

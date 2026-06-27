@@ -1,0 +1,7 @@
+{
+  "Application": {
+    "name": "lenient-disable-line-mixed",
+    "enabled": true,
+    "description": "active value"
+  }
+}

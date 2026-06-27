@@ -1,0 +1,7 @@
+@yini strict
+
+^ Application
+name = "strict-block-comment-unterminated"
+/* This block comment never closes.
+
+/END

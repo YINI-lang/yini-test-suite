@@ -1,0 +1,6 @@
+#!/usr/bin/env yini
+
+^ App
+name = "shebang-line"
+mode = "lenient"
+enabled = true
