@@ -1,0 +1,6 @@
+@YINI
+
+^ App
+name = "yini-marker-uppercase"
+mode = "lenient"
+enabled = true

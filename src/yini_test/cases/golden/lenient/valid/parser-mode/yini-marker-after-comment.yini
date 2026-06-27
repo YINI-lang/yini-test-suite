@@ -1,0 +1,7 @@
+# The marker may appear after leading comments.
+@yini
+
+^ App
+name = "yini-marker-after-comment"
+mode = "lenient"
+enabled = true

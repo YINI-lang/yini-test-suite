@@ -1,0 +1,8 @@
+@YINI
+
+^ App
+name = "yini-marker-uppercase"
+mode = "strict"
+enabled = true
+
+/END

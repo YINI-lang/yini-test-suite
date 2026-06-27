@@ -1,0 +1,9 @@
+#!/usr/bin/env yini
+@yini
+
+^ App
+name = "shebang-with-yini-marker"
+mode = "strict"
+enabled = true
+
+/END

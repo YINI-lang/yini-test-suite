@@ -1,0 +1,6 @@
+@Yini
+
+^ App
+name = "yini-marker-mixed-case"
+mode = "lenient"
+enabled = true

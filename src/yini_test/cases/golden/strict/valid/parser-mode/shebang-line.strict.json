@@ -1,0 +1,7 @@
+{
+  "App": {
+    "name": "shebang-line",
+    "mode": "strict",
+    "enabled": true
+  }
+}
