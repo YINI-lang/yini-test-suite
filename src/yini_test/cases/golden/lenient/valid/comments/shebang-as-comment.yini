@@ -1,0 +1,6 @@
+@yini
+#!/usr/bin/env yini
+
+^ Application
+name = "lenient-shebang-as-comment"
+enabled = true

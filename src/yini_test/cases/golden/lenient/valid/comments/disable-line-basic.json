@@ -1,0 +1,6 @@
+{
+  "Application": {
+    "name": "lenient-disable-line-basic",
+    "enabled": true
+  }
+}

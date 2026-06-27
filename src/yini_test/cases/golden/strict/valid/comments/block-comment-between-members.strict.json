@@ -1,0 +1,6 @@
+{
+  "Application": {
+    "name": "strict-block-comment-between-members",
+    "enabled": true
+  }
+}

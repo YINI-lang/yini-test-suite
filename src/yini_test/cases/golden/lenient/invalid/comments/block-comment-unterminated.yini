@@ -1,0 +1,5 @@
+@yini
+
+^ Application
+name = "lenient-block-comment-unterminated"
+/* This block comment never closes.

@@ -1,0 +1,6 @@
+{
+  "Application": {
+    "name": "strict-disable-line-basic",
+    "enabled": true
+  }
+}

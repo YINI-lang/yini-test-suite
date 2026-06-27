@@ -1,0 +1,7 @@
+@yini strict
+
+^ Application
+name = "strict-block-comment-nested"
+/* outer /* inner */ still-outer */
+
+/END

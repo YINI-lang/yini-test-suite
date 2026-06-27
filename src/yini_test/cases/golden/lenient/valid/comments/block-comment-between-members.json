@@ -1,0 +1,6 @@
+{
+  "Application": {
+    "name": "lenient-block-comment-between-members",
+    "enabled": true
+  }
+}

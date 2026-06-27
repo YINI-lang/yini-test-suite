@@ -1,0 +1,10 @@
+@yini strict
+
+^ Application
+name = "strict-block-comment-between-members"
+/*
+ * This block comment sits between active members.
+ */
+enabled = true
+
+/END

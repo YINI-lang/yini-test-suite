@@ -1,0 +1,6 @@
+{
+  "Application": {
+    "name": "lenient-comment-after-end-marker",
+    "enabled": true
+  }
+}

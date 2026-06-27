@@ -1,0 +1,6 @@
+@yini
+
+--^ Disabled
+^ Application
+name = "lenient-disable-line-section"
+enabled = true
