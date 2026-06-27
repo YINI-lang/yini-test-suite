@@ -1,0 +1,6 @@
+@yini strict
+
+^ Keys
+1key = "val"
+
+/END

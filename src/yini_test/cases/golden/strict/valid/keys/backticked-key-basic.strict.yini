@@ -1,0 +1,7 @@
+@yini strict
+
+^ Keys
+`Description of Project` = "val"
+enabled = true
+
+/END
