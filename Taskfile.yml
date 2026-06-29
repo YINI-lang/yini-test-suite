@@ -114,6 +114,7 @@ tasks:
     desc: Run lenient smoke cases against yini-parser-python
     env:
       PYTHONPATH: src
+      PYTHONIOENCODING: utf-8
     cmds:
       - python -m yini_test smoke --cases-root {{.PATH_CASES}} --adapter python ../yini-parser-python/tools/yini_parser_adapter.py --input {input} --mode {mode}
 
@@ -121,6 +122,7 @@ tasks:
     desc: Run strict smoke cases against yini-parser-python
     env:
       PYTHONPATH: src
+      PYTHONIOENCODING: utf-8
     cmds:
       - python -m yini_test smoke --strict --cases-root {{.PATH_CASES}} --adapter python ../yini-parser-python/tools/yini_parser_adapter.py --input {input} --mode {mode}
 
@@ -128,6 +130,7 @@ tasks:
     desc: Run smoke and golden cases in lenient and strict mode against yini-parser-python
     env:
       PYTHONPATH: src
+      PYTHONIOENCODING: utf-8
     cmds:
       - python -m yini_test all --all-modes --cases-root {{.PATH_CASES}} --adapter python ../yini-parser-python/tools/yini_parser_adapter.py --input {input} --mode {mode}
 
