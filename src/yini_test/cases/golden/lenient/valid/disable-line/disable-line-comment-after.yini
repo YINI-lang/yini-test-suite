@@ -1,0 +1,6 @@
+@yini
+
+^ Application
+--key = "val" // comment after disabled content
+key = "kept"
+

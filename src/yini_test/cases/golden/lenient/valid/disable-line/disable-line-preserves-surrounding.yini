@@ -1,0 +1,7 @@
+@yini
+
+^ Application
+before = "kept-before"
+--middle = "disabled"
+after = "kept-after"
+
