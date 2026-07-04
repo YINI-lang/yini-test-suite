@@ -1,0 +1,7 @@
+@yini strict
+
+^ Lists
+items = [true, false, true]
+
+/END
+
