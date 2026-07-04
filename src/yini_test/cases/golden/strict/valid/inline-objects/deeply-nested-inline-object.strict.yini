@@ -1,0 +1,7 @@
+@yini strict
+
+^ Objects
+entry = { a: { b: { c: 1 } } }
+
+/END
+
