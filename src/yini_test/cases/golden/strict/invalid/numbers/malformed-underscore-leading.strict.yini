@@ -1,0 +1,7 @@
+@yini strict
+
+^ Numbers
+val = _123
+
+/END
+

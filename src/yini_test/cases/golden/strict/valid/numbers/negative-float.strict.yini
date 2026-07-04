@@ -1,0 +1,7 @@
+@yini strict
+
+^ Numbers
+val = -3.14
+
+/END
+
