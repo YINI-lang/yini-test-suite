@@ -1,0 +1,9 @@
+@yini strict
+
+^ Encoding
+name = "Leila Häkkinen"
+city = "Zürich"
+symbol = "東京"
+
+/END
+

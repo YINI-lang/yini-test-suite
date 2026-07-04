@@ -1,0 +1,7 @@
+@yini strict
+
+^ Values
+key = null
+
+/END
+

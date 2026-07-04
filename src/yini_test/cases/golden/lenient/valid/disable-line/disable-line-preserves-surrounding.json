@@ -1,0 +1,7 @@
+{
+    "Application": {
+        "before": "kept-before",
+        "after": "kept-after"
+    }
+}
+

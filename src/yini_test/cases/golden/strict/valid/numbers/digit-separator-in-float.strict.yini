@@ -1,0 +1,7 @@
+@yini strict
+
+^ Numbers
+val = 3_141.592_653
+
+/END
+

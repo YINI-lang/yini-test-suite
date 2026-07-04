@@ -1,0 +1,5 @@
+@yini
+
+^ Encoding
+name = "crlf-line-endings"
+valid = true

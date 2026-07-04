@@ -1,0 +1,6 @@
+@yini
+
+^ Application
+--key = "val"
+key = "kept"
+

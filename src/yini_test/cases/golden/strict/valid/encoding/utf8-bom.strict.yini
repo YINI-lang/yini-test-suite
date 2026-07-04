@@ -1,0 +1,8 @@
+﻿@yini strict
+
+^ Encoding
+name = "utf8-bom"
+accepted = true
+
+/END
+

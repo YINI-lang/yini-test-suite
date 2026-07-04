@@ -1,0 +1,7 @@
+@yini strict
+
+^ Concat
+message = "a" + "b" + "c"
+
+/END
+

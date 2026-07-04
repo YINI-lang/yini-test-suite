@@ -1,0 +1,7 @@
+@yini strict
+
+^ Objects
+user = { name: "Kim", role: "admin" }
+
+/END
+

@@ -1,0 +1,7 @@
+@yini strict
+
+^ Lists
+items = [42]
+
+/END
+

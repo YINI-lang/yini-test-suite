@@ -1,0 +1,7 @@
+@yini strict
+
+^ Objects
+entry = { tags: ["a", "b"] }
+
+/END
+

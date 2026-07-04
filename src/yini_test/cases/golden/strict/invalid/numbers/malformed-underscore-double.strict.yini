@@ -1,0 +1,7 @@
+@yini strict
+
+^ Numbers
+val = 1__000
+
+/END
+
