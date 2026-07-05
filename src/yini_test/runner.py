@@ -12,6 +12,7 @@ from dataclasses import dataclass
 from importlib import resources
 import json
 from pathlib import Path
+import re
 import sys
 import time
 
@@ -201,6 +202,7 @@ def run_case_groups(
 
     print_summary(
         adapter_name=format_adapter_name(adapter_tokens),
+        parser_version=detect_parser_version(adapter_tokens),
         selected_suite=selected_suite,
         group_summaries=group_summaries,
         total_passed=total_passed,
@@ -214,6 +216,7 @@ def run_case_groups(
 
 def print_summary(
     adapter_name: str,
+    parser_version: str,
     selected_suite: str,
     group_summaries: list[GroupSummary],
     total_passed: int,
@@ -231,6 +234,7 @@ def print_summary(
     print(summary_rule)
     print("YINI Test Suite Summary")
     print(f"Adapter: {adapter_name}")
+    print(f"Parser version: {parser_version}")
     print(f"yini-test-suite: {__version__}")
     print(f"Test suite: {selected_suite}")
     print(f"YINI spec: {get_yini_spec_revision()}")
@@ -353,6 +357,118 @@ def format_adapter_name(adapter_tokens: list[str]) -> str:
             return name
 
     return Path(adapter_tokens[0]).stem or adapter_tokens[0]
+
+
+def detect_parser_version(adapter_tokens: list[str]) -> str:
+    """
+    Return the parser package version inferred from the adapter command.
+
+    The adapter contract does not currently expose version metadata. For the
+    standard sibling parser repositories, infer it from package metadata near
+    the adapter script path.
+    """
+
+    repository_path = find_parser_repository_path(adapter_tokens)
+
+    if repository_path is None:
+        return "not detected"
+
+    package_json_version = read_package_json_version(repository_path / "package.json")
+
+    if package_json_version is not None:
+        return package_json_version
+
+    pyproject_version = read_pyproject_version(repository_path / "pyproject.toml")
+
+    if pyproject_version is not None:
+        return pyproject_version
+
+    return "not detected"
+
+
+def find_parser_repository_path(adapter_tokens: list[str]) -> Path | None:
+    """
+    Find the parser repository path embedded in an adapter command.
+    """
+
+    for token in adapter_tokens:
+        normalized = token.replace("\\", "/")
+        parts = normalized.split("/")
+
+        for index, part in enumerate(parts):
+            if part.startswith("yini-parser-"):
+                repository_token = "/".join(parts[: index + 1])
+                repository_path = Path(repository_token)
+
+                if not repository_path.is_absolute():
+                    repository_path = Path.cwd() / repository_path
+
+                return repository_path.resolve()
+
+    return None
+
+
+def read_package_json_version(package_json_path: Path) -> str | None:
+    """
+    Read a package version from package.json when present.
+    """
+
+    if not package_json_path.is_file():
+        return None
+
+    try:
+        package_data = json.loads(package_json_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+
+    if not isinstance(package_data, dict):
+        return None
+
+    version = package_data.get("version")
+
+    if isinstance(version, str) and version.strip():
+        return version.strip()
+
+    return None
+
+
+def read_pyproject_version(pyproject_path: Path) -> str | None:
+    """
+    Read a PEP 621 project version from pyproject.toml when present.
+
+    Python 3.10 has no standard TOML parser, so this intentionally reads only
+    the simple [project] version assignment used by the parser repositories.
+    """
+
+    if not pyproject_path.is_file():
+        return None
+
+    try:
+        lines = pyproject_path.read_text(encoding="utf-8").splitlines()
+    except OSError:
+        return None
+
+    in_project_section = False
+
+    for line in lines:
+        stripped = line.strip()
+
+        if not stripped or stripped.startswith("#"):
+            continue
+
+        if stripped.startswith("[") and stripped.endswith("]"):
+            in_project_section = stripped == "[project]"
+            continue
+
+        if not in_project_section:
+            continue
+
+        match = re.fullmatch(r"version\s*=\s*[\"']([^\"']+)[\"']", stripped)
+
+        if match:
+            return match.group(1).strip()
+
+    return None
 
 
 def run_case_group(
