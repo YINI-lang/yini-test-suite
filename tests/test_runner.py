@@ -15,6 +15,7 @@ from yini_test.discovery import (
 )
 from yini_test.models import CaseResult, InvalidCase, ValidCase
 from yini_test.runner import (
+    detect_parser_version,
     format_adapter_name,
     format_summary_rule,
     get_yini_spec_revision,
@@ -300,6 +301,10 @@ def test_run_suite_matrix_runs_groups_in_suite_then_mode_order(
         ]
 
     monkeypatch.setattr("yini_test.runner.run_case_group", fake_run_case_group)
+    monkeypatch.setattr(
+        "yini_test.runner.detect_parser_version",
+        lambda adapter_tokens: "not detected",
+    )
 
     # Act.
     exit_code = run_suite_matrix(
@@ -321,6 +326,7 @@ def test_run_suite_matrix_runs_groups_in_suite_then_mode_order(
     ]
     assert "YINI Test Suite Summary" in output
     assert "Adapter: adapter" in output
+    assert "Parser version: not detected" in output
     assert "yini-test-suite: 0.3.0b1" in output
     assert "Test suite: all" in output
     assert "YINI spec: 1.0.0 RC 6" in output
@@ -360,6 +366,10 @@ def test_run_suite_matrix_summary_lists_failed_groups(
         ]
 
     monkeypatch.setattr("yini_test.runner.run_case_group", fake_run_case_group)
+    monkeypatch.setattr(
+        "yini_test.runner.detect_parser_version",
+        lambda adapter_tokens: "1.6.0",
+    )
 
     # Act.
     exit_code = run_suite_matrix(
@@ -381,6 +391,7 @@ def test_run_suite_matrix_summary_lists_failed_groups(
 
     assert exit_code == 1
     assert "Adapter: yini-parser-typescript" in output
+    assert "Parser version: 1.6.0" in output
     assert "yini-test-suite: 0.3.0b1" in output
     assert "Test suite: all" in output
     assert "YINI spec: 1.0.0 RC 6" in output
@@ -420,6 +431,58 @@ def test_format_adapter_name_uses_script_name_after_runner_command() -> None:
 
     # Assert.
     assert adapter_name == "custom_adapter"
+
+
+def test_detect_parser_version_reads_package_json(tmp_path: Path) -> None:
+    # Arrange.
+    parser_root = tmp_path / "yini-parser-typescript"
+    adapter_path = parser_root / "dist-tools" / "tools" / "yini-test-adapter.js"
+    adapter_path.parent.mkdir(parents=True)
+    adapter_path.write_text("// adapter", encoding="utf-8")
+    (parser_root / "package.json").write_text(
+        json.dumps({"name": "yini-parser", "version": "1.6.0"}),
+        encoding="utf-8",
+    )
+
+    # Act.
+    version = detect_parser_version(["node", str(adapter_path), "--input", "{input}"])
+
+    # Assert.
+    assert version == "1.6.0"
+
+
+def test_detect_parser_version_reads_pyproject_toml(tmp_path: Path) -> None:
+    # Arrange.
+    parser_root = tmp_path / "yini-parser-python"
+    adapter_path = parser_root / "tools" / "yini_parser_adapter.py"
+    adapter_path.parent.mkdir(parents=True)
+    adapter_path.write_text("# adapter", encoding="utf-8")
+    (parser_root / "pyproject.toml").write_text(
+        '[project]\nname = "yini-parser"\nversion = "0.2.0b1"\n',
+        encoding="utf-8",
+    )
+
+    # Act.
+    version = detect_parser_version(["python", str(adapter_path), "--input", "{input}"])
+
+    # Assert.
+    assert version == "0.2.0b1"
+
+
+def test_detect_parser_version_returns_not_detected_without_metadata(
+    tmp_path: Path,
+) -> None:
+    # Arrange.
+    parser_root = tmp_path / "yini-parser-custom"
+    adapter_path = parser_root / "tools" / "adapter.py"
+    adapter_path.parent.mkdir(parents=True)
+    adapter_path.write_text("# adapter", encoding="utf-8")
+
+    # Act.
+    version = detect_parser_version(["python", str(adapter_path), "--input", "{input}"])
+
+    # Assert.
+    assert version == "not detected"
 
 
 def test_format_summary_rule_falls_back_for_limited_terminal_encoding() -> None:
