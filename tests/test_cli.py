@@ -20,6 +20,7 @@ def test_build_parser() -> None:
     assert parser.prog == "yini-test-suite"
     assert args.suite == "smoke"
     assert args.strict is False
+    assert args.show_progress is False
     assert args.adapter == [
         "python",
         "adapter.py",
@@ -61,3 +62,18 @@ def test_build_parser_accepts_all_modes() -> None:
     assert args.suite == "all"
     assert args.all_modes is True
     assert args.strict is False
+
+
+def test_build_parser_accepts_show_progress() -> None:
+    parser = build_parser()
+    args = parser.parse_args(
+        [
+            "smoke",
+            "--show-progress",
+            "--adapter",
+            "python",
+            "adapter.py",
+        ]
+    )
+
+    assert args.show_progress is True

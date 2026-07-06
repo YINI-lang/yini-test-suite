@@ -67,6 +67,7 @@ def run_suite(
     cases_root: Path,
     adapter_tokens: list[str],
     fail_fast: bool = False,
+    show_progress: bool = False,
 ) -> int:
     """
     Run one test suite in the requested parser mode.
@@ -77,6 +78,7 @@ def run_suite(
     - cases_root: root directory containing test case suites
     - adapter_tokens: command tokens for the adapter
     - fail_fast: stop after the first failure if True
+    - show_progress: print RUN lines before each case executes
 
     Returns:
     - 0 if all cases passed
@@ -93,6 +95,7 @@ def run_suite(
         adapter_tokens=adapter_tokens,
         fail_fast=fail_fast,
         show_group_headers=False,
+        show_progress=show_progress,
     )
 
 
@@ -102,6 +105,7 @@ def run_suite_matrix(
     cases_root: Path,
     adapter_tokens: list[str],
     fail_fast: bool = False,
+    show_progress: bool = False,
 ) -> int:
     """
     Run selected suites across multiple parser modes.
@@ -124,6 +128,7 @@ def run_suite_matrix(
         adapter_tokens=adapter_tokens,
         fail_fast=fail_fast,
         show_group_headers=True,
+        show_progress=show_progress,
     )
 
 
@@ -134,6 +139,7 @@ def run_case_groups(
     adapter_tokens: list[str],
     fail_fast: bool = False,
     show_group_headers: bool = False,
+    show_progress: bool = False,
 ) -> int:
     """
     Run concrete suite/mode groups and print one combined summary.
@@ -167,6 +173,7 @@ def run_case_groups(
             cases_root=cases_root,
             adapter_tokens=adapter_tokens,
             fail_fast=fail_fast,
+            show_progress=show_progress,
         )
         group_duration = time.perf_counter() - group_started_at
 
@@ -477,6 +484,7 @@ def run_case_group(
     cases_root: Path,
     adapter_tokens: list[str],
     fail_fast: bool = False,
+    show_progress: bool = False,
 ) -> list[CaseResult]:
     """
     Run one concrete suite directory.
@@ -508,7 +516,12 @@ def run_case_group(
     results: list[CaseResult] = []
 
     for valid_case in valid_cases:
-        result = run_valid_case(valid_case, adapter_tokens=adapter_tokens, mode=mode)
+        result = run_valid_case(
+            valid_case,
+            adapter_tokens=adapter_tokens,
+            mode=mode,
+            show_progress=show_progress,
+        )
         results.append(result)
 
         if fail_fast and not result.passed:
@@ -516,7 +529,10 @@ def run_case_group(
 
     for warning_case in warning_cases:
         result = run_warning_case(
-            warning_case, adapter_tokens=adapter_tokens, mode=mode
+            warning_case,
+            adapter_tokens=adapter_tokens,
+            mode=mode,
+            show_progress=show_progress,
         )
         results.append(result)
 
@@ -525,7 +541,10 @@ def run_case_group(
 
     for invalid_case in invalid_cases:
         result = run_invalid_case(
-            invalid_case, adapter_tokens=adapter_tokens, mode=mode
+            invalid_case,
+            adapter_tokens=adapter_tokens,
+            mode=mode,
+            show_progress=show_progress,
         )
         results.append(result)
 
@@ -539,6 +558,7 @@ def run_valid_case(
     case: ValidCase,
     adapter_tokens: list[str],
     mode: str,
+    show_progress: bool = False,
 ) -> CaseResult:
     """
     Run a valid case.
@@ -551,7 +571,9 @@ def run_valid_case(
 
     expected = load_expected_json(case.json_path)
 
-    print(f'RUN   "{case.yini_path}"')
+    if show_progress:
+        print(f'RUN   "{case.yini_path}"')
+
     try:
         actual = run_adapter(adapter_tokens, input_path=case.yini_path, mode=mode)
     except RuntimeError as exc:
@@ -577,6 +599,7 @@ def run_warning_case(
     case: WarningCase,
     adapter_tokens: list[str],
     mode: str,
+    show_progress: bool = False,
 ) -> CaseResult:
     """
     Run a warning case.
@@ -591,7 +614,9 @@ def run_warning_case(
     expected_json = load_expected_json(case.json_path)
     expected_warnings = load_expected_warnings(case.warning_path)
 
-    print(f'RUN   "{case.yini_path}"')
+    if show_progress:
+        print(f'RUN   "{case.yini_path}"')
+
     try:
         adapter_result = run_adapter_raw(
             adapter_tokens=adapter_tokens,
@@ -660,6 +685,7 @@ def run_invalid_case(
     case: InvalidCase,
     adapter_tokens: list[str],
     mode: str,
+    show_progress: bool = False,
 ) -> CaseResult:
     """
     Run an invalid case.
@@ -676,7 +702,9 @@ def run_invalid_case(
 
     command[0] = resolve_executable(command[0])
 
-    print(f'RUN   "{case.yini_path}"')
+    if show_progress:
+        print(f'RUN   "{case.yini_path}"')
+
     try:
         adapter_result = run_adapter_raw(
             adapter_tokens=adapter_tokens,

@@ -179,6 +179,8 @@ PASS  "cases\smoke\lenient\valid\1-minimal.yini"
 FAIL  "cases\smoke\lenient\valid\3-nested-sections.yini"
 ```
 
+Use `--show-progress` to also print a `RUN` line before each case executes.
+
 For valid cases, `yini-test-suite` compares the parser output with the matching expected JSON file.
 
 For example:

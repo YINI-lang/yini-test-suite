@@ -19,6 +19,7 @@ from yini_test.runner import (
     format_adapter_name,
     format_summary_rule,
     get_yini_spec_revision,
+    run_valid_case,
     run_suite_matrix,
     _resolve_suite_names,
 )
@@ -291,6 +292,7 @@ def test_run_suite_matrix_runs_groups_in_suite_then_mode_order(
         cases_root: Path,
         adapter_tokens: list[str],
         fail_fast: bool = False,
+        show_progress: bool = False,
     ) -> list[CaseResult]:
         calls.append((suite_name, mode))
         return [
@@ -330,6 +332,8 @@ def test_run_suite_matrix_runs_groups_in_suite_then_mode_order(
     assert "yini-test-suite: 0.3.0b1" in output
     assert "Test suite: all" in output
     assert "YINI spec: 1.0.0 RC 6" in output
+    assert "PASS  " in output
+    assert "RUN   " not in output
     assert "smoke    lenient" in output
     assert "golden   strict" in output
     assert "Result: PASS" in output
@@ -348,6 +352,7 @@ def test_run_suite_matrix_summary_lists_failed_groups(
         cases_root: Path,
         adapter_tokens: list[str],
         fail_fast: bool = False,
+        show_progress: bool = False,
     ) -> list[CaseResult]:
         if suite_name == "golden" and mode == "strict":
             return [
@@ -399,6 +404,106 @@ def test_run_suite_matrix_summary_lists_failed_groups(
     assert "Result: FAIL" in output
     assert "Failed groups:" in output
     assert "- golden / strict: 1 failed" in output
+
+
+def test_run_suite_matrix_show_progress_forwards_to_case_groups(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+) -> None:
+    # Arrange.
+    show_progress_values: list[bool] = []
+
+    def fake_run_case_group(
+        suite_name: str,
+        mode: str,
+        cases_root: Path,
+        adapter_tokens: list[str],
+        fail_fast: bool = False,
+        show_progress: bool = False,
+    ) -> list[CaseResult]:
+        show_progress_values.append(show_progress)
+        return [
+            CaseResult(
+                case_path=tmp_path / f"{suite_name}-{mode}.yini",
+                passed=True,
+            )
+        ]
+
+    monkeypatch.setattr("yini_test.runner.run_case_group", fake_run_case_group)
+    monkeypatch.setattr(
+        "yini_test.runner.detect_parser_version",
+        lambda adapter_tokens: "not detected",
+    )
+
+    # Act.
+    exit_code = run_suite_matrix(
+        suite="smoke",
+        modes=["lenient"],
+        cases_root=tmp_path,
+        adapter_tokens=["adapter"],
+        show_progress=True,
+    )
+
+    # Assert.
+    assert exit_code == 0
+    assert show_progress_values == [True]
+
+
+def test_run_valid_case_hides_run_line_by_default(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    # Arrange.
+    yini_path = tmp_path / "case.yini"
+    json_path = tmp_path / "case.json"
+    case = ValidCase(yini_path=yini_path, json_path=json_path)
+
+    json_path.write_text('{"name": "Demo"}', encoding="utf-8")
+    monkeypatch.setattr(
+        "yini_test.runner.run_adapter",
+        lambda adapter_tokens, input_path, mode: {"name": "Demo"},
+    )
+
+    # Act.
+    result = run_valid_case(case, adapter_tokens=["adapter"], mode="lenient")
+
+    # Assert.
+    output = capsys.readouterr().out
+
+    assert result.passed is True
+    assert "RUN   " not in output
+
+
+def test_run_valid_case_shows_run_line_with_show_progress(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    # Arrange.
+    yini_path = tmp_path / "case.yini"
+    json_path = tmp_path / "case.json"
+    case = ValidCase(yini_path=yini_path, json_path=json_path)
+
+    json_path.write_text('{"name": "Demo"}', encoding="utf-8")
+    monkeypatch.setattr(
+        "yini_test.runner.run_adapter",
+        lambda adapter_tokens, input_path, mode: {"name": "Demo"},
+    )
+
+    # Act.
+    result = run_valid_case(
+        case,
+        adapter_tokens=["adapter"],
+        mode="lenient",
+        show_progress=True,
+    )
+
+    # Assert.
+    output = capsys.readouterr().out
+
+    assert result.passed is True
+    assert f'RUN   "{yini_path}"' in output
 
 
 def test_format_adapter_name_prefers_yini_parser_repository_name() -> None:

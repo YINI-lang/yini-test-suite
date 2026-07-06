@@ -113,6 +113,17 @@ def build_parser() -> argparse.ArgumentParser:
         help="Stop at the first failing case.",
     )
 
+    # Show pre-case execution progress.
+    #
+    # PASS and FAIL lines are always shown. This flag adds the RUN line before
+    # each adapter invocation, which is useful for seeing the currently running
+    # case when debugging slow or hanging adapters.
+    parser.add_argument(
+        "--show-progress",
+        action="store_true",
+        help="Show RUN lines before each case executes.",
+    )
+
     # Adapter command used to call a parser implementation.
     #
     # Important:
@@ -177,6 +188,7 @@ def main(argv: list[str] | None = None) -> int:
             cases_root=args.cases_root,
             adapter_tokens=args.adapter,
             fail_fast=args.fail_fast,
+            show_progress=args.show_progress,
         )
 
     # Convert the boolean CLI flag into the explicit mode string expected
@@ -193,4 +205,5 @@ def main(argv: list[str] | None = None) -> int:
         cases_root=args.cases_root,
         adapter_tokens=args.adapter,
         fail_fast=args.fail_fast,
+        show_progress=args.show_progress,
     )
