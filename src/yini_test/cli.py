@@ -36,6 +36,8 @@ from pathlib import Path
 
 from .runner import run_suite, run_suite_matrix
 
+DEFAULT_CASES_ROOT = Path(__file__).resolve().parent / "cases"
+
 
 def build_parser() -> argparse.ArgumentParser:
     """
@@ -99,8 +101,8 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--cases-root",
         type=Path,
-        default=Path("cases"),
-        help="Root directory containing test cases. Default: cases",
+        default=DEFAULT_CASES_ROOT,
+        help="Root directory containing test cases. Default: packaged cases",
     )
 
     # Stop immediately when the first failing case is found.

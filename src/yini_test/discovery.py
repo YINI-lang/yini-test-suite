@@ -25,8 +25,8 @@ def get_expected_json_path(yini_path: Path) -> Path:
     if not json_path.is_file():
         raise FileNotFoundError(
             "Expected JSON file not found for YINI case.\n"
-            f"  yini_path: \"{yini_path}\",\n"
-            f"  expected_json_path: \"{json_path}\"\n"
+            f'  yini_path: "{yini_path}",\n'
+            f'  expected_json_path: "{json_path}"\n'
             "  Hint: Every valid or warning .yini case must have a matching "
             ".json file with the same basename."
         )
@@ -50,8 +50,8 @@ def get_expected_warning_path(yini_path: Path) -> Path:
     if not warning_path.is_file():
         raise FileNotFoundError(
             "Expected warning file not found for warning YINI case.\n"
-            f"  yini_path: \"{yini_path}\",\n"
-            f"  expected_warning_path: \"{warning_path}\"\n"
+            f'  yini_path: "{yini_path}",\n'
+            f'  expected_warning_path: "{warning_path}"\n'
             "  Hint: Every warning .yini case must have a matching "
             ".warning.json file with the same basename."
         )
@@ -101,9 +101,7 @@ def discover_warning_cases(warning_dir: Path) -> list[WarningCase]:
         return cases
 
     if not warning_dir.is_dir():
-        raise NotADirectoryError(
-            f"Warning case path is not a directory: {warning_dir}"
-        )
+        raise NotADirectoryError(f"Warning case path is not a directory: {warning_dir}")
 
     for yini_path in sorted(warning_dir.rglob("*.yini")):
         json_path = get_expected_json_path(yini_path)
@@ -132,7 +130,4 @@ def discover_invalid_cases(invalid_dir: Path) -> list[InvalidCase]:
     if not invalid_dir.is_dir():
         raise NotADirectoryError(f"Invalid case path is not a directory: {invalid_dir}")
 
-    return [
-        InvalidCase(yini_path=path)
-        for path in sorted(invalid_dir.rglob("*.yini"))
-    ]
+    return [InvalidCase(yini_path=path) for path in sorted(invalid_dir.rglob("*.yini"))]

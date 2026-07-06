@@ -80,7 +80,7 @@ The predefined Taskfile commands assume that the parser repositories are located
 
 Adapter paths are **relative to** this directory: `yini-test-suite/`:
 - The TypeScript parser adapter is expected at:  
-  `../yini-parser-typescript/tools/yini-test-adapter.ts`
+  `../yini-parser-typescript/dist-tools/tools/yini-test-adapter.js`
 - The Python parser adapter is expected at:  
   `../yini-parser-python/tools/yini_parser_adapter.py`
 
@@ -118,7 +118,7 @@ This runs the unit and integration tests for the `yini-test-suite` runner.
 
 A successful result should look similar to:
 ```txt
-15 passed
+34 passed
 ```
 
 ### 5. Run smoke tests against `yini-parser-python`
@@ -133,7 +133,7 @@ This runs the smoke test cases against the Python parser adapter.
 The task uses a command similar to:
 ```bash
 python -m yini_test smoke \
-  --cases-root cases \
+  --cases-root src/yini_test/cases \
   --adapter python ../yini-parser-python/tools/yini_parser_adapter.py --input {input} --mode {mode}
 ```
 
@@ -202,7 +202,7 @@ If a test case fails, `yini-test-suite` prints the difference showing the expect
 - `src/yini_test/__main__.py` is the package entry point.
 - `src/yini_test/cli.py` handles the command-line argument parsing.
 - `src/yini_test/runner.py` contains the core test-running logic.
-- `cases/` contains the shared (parser test) case corpus.
+- `src/yini_test/cases/` contains the shared parser test case corpus.
 - `tests/` contains tests for this `yini-test-suite` project itself.
 
 Current case groups include:

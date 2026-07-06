@@ -24,7 +24,7 @@ def load_expected_json(path: Path) -> Any:
     except json.JSONDecodeError as exc:
         raise RuntimeError(
             "Expected JSON file is not valid JSON.\n"
-            f"  json_path: \"{path}\"\n"
+            f'  json_path: "{path}"\n'
             f"  error: {exc}"
         ) from exc
 
@@ -47,28 +47,28 @@ def load_expected_warnings(path: Path) -> list[dict[str, Any]]:
     if not isinstance(warnings_data, list):
         raise RuntimeError(
             "Expected warning file must contain a JSON array.\n"
-            f"  warning_path: \"{path}\""
+            f'  warning_path: "{path}"'
         )
 
     for index, item in enumerate(warnings_data):
         if not isinstance(item, dict):
             raise RuntimeError(
                 "Each expected warning entry must be a JSON object.\n"
-                f"  warning_path: \"{path}\"\n"
+                f'  warning_path: "{path}"\n'
                 f"  index: {index}"
             )
 
         if "contains" not in item:
             raise RuntimeError(
                 "Each expected warning entry must contain a 'contains' field.\n"
-                f"  warning_path: \"{path}\"\n"
+                f'  warning_path: "{path}"\n'
                 f"  index: {index}"
             )
 
         if not isinstance(item["contains"], str):
             raise RuntimeError(
                 "The expected warning 'contains' field must be a string.\n"
-                f"  warning_path: \"{path}\"\n"
+                f'  warning_path: "{path}"\n'
                 f"  index: {index}"
             )
 

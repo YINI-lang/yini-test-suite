@@ -30,10 +30,7 @@ def render_adapter_command(
     if not adapter_tokens:
         raise ValueError("Adapter command is empty.")
 
-    return [
-        token.format(input=str(input_path), mode=mode)
-        for token in adapter_tokens
-    ]
+    return [token.format(input=str(input_path), mode=mode) for token in adapter_tokens]
 
 
 def run_adapter_raw(
@@ -128,9 +125,7 @@ def parse_adapter_stdout_json(stdout: str, case_name: str) -> Any:
     output = stdout.strip()
 
     if not output:
-        raise RuntimeError(
-            f"Adapter produced no JSON output for case: {case_name}"
-        )
+        raise RuntimeError(f"Adapter produced no JSON output for case: {case_name}")
 
     try:
         return json.loads(output)

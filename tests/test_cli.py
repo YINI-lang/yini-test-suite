@@ -1,5 +1,5 @@
 # tests/test_cli.py
-from yini_test.cli import build_parser
+from yini_test.cli import DEFAULT_CASES_ROOT, build_parser
 
 
 def test_build_parser() -> None:
@@ -21,6 +21,7 @@ def test_build_parser() -> None:
     assert args.suite == "smoke"
     assert args.strict is False
     assert args.show_progress is False
+    assert args.cases_root == DEFAULT_CASES_ROOT
     assert args.adapter == [
         "python",
         "adapter.py",
@@ -77,3 +78,19 @@ def test_build_parser_accepts_show_progress() -> None:
     )
 
     assert args.show_progress is True
+
+
+def test_build_parser_accepts_cases_root_override(tmp_path) -> None:
+    parser = build_parser()
+    args = parser.parse_args(
+        [
+            "smoke",
+            "--cases-root",
+            str(tmp_path),
+            "--adapter",
+            "python",
+            "adapter.py",
+        ]
+    )
+
+    assert args.cases_root == tmp_path

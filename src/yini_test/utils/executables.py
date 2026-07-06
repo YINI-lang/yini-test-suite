@@ -4,6 +4,7 @@ from __future__ import annotations
 import os
 import shutil
 
+
 # For example, the cross-platform command "npx" should resolve:
 # - on Windows to: C:\Program Files\nodejs\npx.cmd
 # - on Linux to:   /usr/bin/npx

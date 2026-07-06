@@ -161,7 +161,7 @@ Before preparing a release:
 - Run `task check`.
 - Run `task build`.
 - Run `task package-check`.
-- Run `task run-all-typescript` and `task run-all-python` when the sibling parser repositories are available.
+- Run `task run-all-typescript` and `task run-all-python` when the sibling parser repositories are available. These tasks cover the official ecosystem parser adapters, but parser or adapter failures should be fixed in the relevant sibling parser repository, not in `yini-test-suite`, unless the shared case corpus or runner contract is wrong.
 - Record known parser conformance gaps separately instead of hiding them in the corpus.
 
 If building or checking a distribution locally, install the packaging tools in
@@ -200,6 +200,24 @@ Prefer a project-scoped PyPI API token for `yini-test-suite`.
 
 Only publish from a clean, intentional release process. PyPI versions are
 immutable, so if an uploaded version needs a fix, bump the version number.
+
+## Testing the package
+
+Install the new package:
+```bash
+python -m pip install --upgrade yini-test-suite
+```
+
+Then verify the version with:
+```bash
+yini-test-suite --help
+```
+
+And verify the module entry point still works:
+Then verify the version with:
+```bash
+python -m yini_test --help
+```
 
 ## Final Gate
 

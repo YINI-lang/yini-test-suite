@@ -116,6 +116,9 @@ python -m yini_test --help
 When running without editable installation, set `PYTHONPATH=src` first or use
 the Taskfile commands, which already set it where needed.
 
+The installed CLI uses the packaged case corpus by default. Use `--cases-root`
+only when you want to run a different local case directory.
+
 ## Project Layout
 
 Important paths:
