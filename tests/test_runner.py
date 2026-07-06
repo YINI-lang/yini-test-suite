@@ -330,7 +330,7 @@ def test_run_suite_matrix_runs_groups_in_suite_then_mode_order(
     assert "Adapter: adapter" in output
     assert "Parser version: not detected" in output
     assert "yini-test-suite: 0.3.0b1" in output
-    assert "Test suite: all" in output
+    assert 'Test suite: "all"' in output
     assert "YINI spec: 1.0.0 RC 6" in output
     assert "PASS  " in output
     assert "RUN   " not in output
@@ -338,6 +338,17 @@ def test_run_suite_matrix_runs_groups_in_suite_then_mode_order(
     assert "golden   strict" in output
     assert "Result: PASS" in output
     assert "Summary: 4 passed, 0 failed, 4 total" in output
+    assert output.index("YINI Test Suite Summary") < output.index(
+        "yini-test-suite: 0.3.0b1"
+    )
+    assert output.index("yini-test-suite: 0.3.0b1") < output.index("Adapter: adapter")
+    assert output.index("Adapter: adapter") < output.index(
+        "Parser version: not detected"
+    )
+    assert output.index("Parser version: not detected") < output.index(
+        "YINI spec: 1.0.0 RC 6"
+    )
+    assert output.index("YINI spec: 1.0.0 RC 6") < output.index('Test suite: "all"')
 
 
 def test_run_suite_matrix_summary_lists_failed_groups(
@@ -398,7 +409,7 @@ def test_run_suite_matrix_summary_lists_failed_groups(
     assert "Adapter: yini-parser-typescript" in output
     assert "Parser version: 1.6.0" in output
     assert "yini-test-suite: 0.3.0b1" in output
-    assert "Test suite: all" in output
+    assert 'Test suite: "all"' in output
     assert "YINI spec: 1.0.0 RC 6" in output
     assert "Summary: 3 passed, 1 failed, 4 total" in output
     assert "Result: FAIL" in output

@@ -240,11 +240,11 @@ def print_summary(
 
     print(summary_rule)
     print("YINI Test Suite Summary")
+    print(f"yini-test-suite: {__version__}")
     print(f"Adapter: {adapter_name}")
     print(f"Parser version: {parser_version}")
-    print(f"yini-test-suite: {__version__}")
-    print(f"Test suite: {selected_suite}")
     print(f"YINI spec: {get_yini_spec_revision()}")
+    print(f'Test suite: "{selected_suite}"')
     print()
     print(
         f"{'Suite':<9}{'Mode':<9}{'Passed':>6}{'Failed':>8}{'Total':>7}{'Duration':>10}"
