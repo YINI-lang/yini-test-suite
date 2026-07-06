@@ -1,5 +1,7 @@
 # CHANGELOG
 
+## 0.3.0b2 - 2026 July
+
 ## 0.3.0b1 - 2026 July
 - **Added:** Golden section cases for alternate markers, shorthand depths, separator forms, whitespace handling, and invalid marker/level jumps.
 - **Added:** Golden string cases for raw/classic prefixes, quote variants, triple-quoted strings, Unicode text, Windows paths, and invalid string forms.

@@ -251,7 +251,7 @@ when it can be detected, YINI spec revision, and selected suite:
 
 ```text
 YINI Test Suite Summary
-yini-test-suite: 0.3.0b1
+yini-test-suite: 0.3.0b2
 Adapter: yini-parser-typescript
 Parser version: 1.6.1
 YINI spec: 1.0.0 RC 6

@@ -139,7 +139,7 @@ Use Python-compatible versions:
 
 ```text
 0.3.0a1
-0.3.0b1
+0.3.0b2
 0.3.0rc1
 0.3.0
 ```
