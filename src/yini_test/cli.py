@@ -34,9 +34,17 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
+from . import __version__
 from .runner import run_suite, run_suite_matrix
 
 DEFAULT_CASES_ROOT = Path(__file__).resolve().parent / "cases"
+
+
+class YiniArgumentParser(argparse.ArgumentParser):
+    """Argument parser that prints the package version above help usage."""
+
+    def format_help(self) -> str:
+        return f"{self.prog} {__version__}\n{super().format_help()}"
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -47,7 +55,7 @@ def build_parser() -> argparse.ArgumentParser:
     Keeping parser construction separate makes the CLI easier to test.
     """
 
-    parser = argparse.ArgumentParser(
+    parser = YiniArgumentParser(
         prog="yini-test-suite",
         description="Run YINI test suites against a parser adapter.",
     )
