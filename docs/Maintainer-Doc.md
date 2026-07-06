@@ -159,6 +159,8 @@ Before preparing a release:
 - Confirm `pyproject.toml` metadata and classifiers are correct.
 - Confirm `src/yini_test/cases/manifest.json` targets the intended YINI spec revision.
 - Run `task check`.
+- Run `task build`.
+- Run `task package-check`.
 - Run `task run-all-typescript` and `task run-all-python` when the sibling parser repositories are available.
 - Record known parser conformance gaps separately instead of hiding them in the corpus.
 
@@ -180,6 +182,21 @@ Check built package metadata:
 ```bash
 python -m twine check dist/*
 ```
+
+Upload manually to PyPI:
+
+```bash
+python -m twine upload dist/*
+```
+
+When prompted, use:
+
+```text
+Username: __token__
+Password: <your PyPI API token>
+```
+
+Prefer a project-scoped PyPI API token for `yini-test-suite`.
 
 Only publish from a clean, intentional release process. PyPI versions are
 immutable, so if an uploaded version needs a fix, bump the version number.

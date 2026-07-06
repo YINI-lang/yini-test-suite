@@ -163,6 +163,18 @@ Run all project checks:
 task check
 ```
 
+Build the package:
+
+```bash
+task build
+```
+
+Check built package metadata:
+
+```bash
+task package-check
+```
+
 Direct equivalents:
 
 ```bash
@@ -170,6 +182,8 @@ python -m pytest -v -W error
 python -m ruff check src tests
 python -m ruff format --check src tests
 cmd /c "set MYPYPATH=src&& python -m mypy -p yini_test --explicit-package-bases --ignore-missing-imports"
+python -m build
+python -m twine check dist/*
 ```
 
 On Windows, the Taskfile sets `MYPYPATH=src` for mypy through `cmd /c`.
