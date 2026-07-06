@@ -242,9 +242,38 @@ defines and runs the shared adapter contract.
 
 ## Runner Output
 
+The runner starts by printing the package name and version:
+
+```text
+yini-test-suite 0.3.0b2
+```
+
 The default runner output prints `PASS`, `FAIL`, and the final summary. Add
 `--show-progress` to a direct `python -m yini_test ...` or `yini-test-suite ...`
 command when you also want a `RUN` line before each case.
+
+Example case lines:
+
+```text
+PASS  "cases\smoke\lenient\valid\1-minimal.yini"
+FAIL  "cases\smoke\lenient\valid\3-nested-sections.yini"
+```
+
+For valid cases, `yini-test-suite` compares the parser output with the matching
+expected JSON file. For example:
+
+```text
+cases/smoke/lenient/valid/3-nested-sections.yini
+```
+
+is compared with:
+
+```text
+cases/smoke/lenient/valid/3-nested-sections.json
+```
+
+If a test case fails, `yini-test-suite` prints the difference showing the
+expected output and the actual parser output.
 
 The summary identifies the test-suite version, adapter, parser package version
 when it can be detected, YINI spec revision, and selected suite:

@@ -1,234 +1,169 @@
 # yini-test-suite
 
-The **yini-test-suite** tool is the shared case corpus (test harness) for YINI parser implementations.
+`yini-test-suite` is the shared command-line test runner and case corpus for
+YINI parser implementations.
 
-It does not contain a YINI parser itself. Instead, it invokes a chosen parser implementation through an adapter, compares the actual output with the expected output, and reports pass/fail results consistently.
+It does not parse YINI itself. Instead, it calls a parser implementation through
+an adapter, compares the parser output with the expected JSON for each case, and
+reports pass/fail results consistently.
 
-The goal of `yini-test-suite` is to stay implementation-agnostic, so that multiple YINI parsers can be tested in a uniform way.
+The goal is to give different YINI parsers the same conformance target.
 
----
-
-## What `yini-test-suite` does
-
-- Runs a chosen parser implementation through an adapter.
-- Compares actual output with expected output.
-- Reports pass/fail results consistently.
-- Provides a shared test corpus for multiple YINI parser implementations.
-
----
-
-## What `yini-test-suite` does not do
-
-- It does not contain a YINI parser.
-- It does not contain parser-specific execution logic.
-- It does not own parser-specific adapters.
-
----
-
-## Quick Start
-
-### First-time setup
-
-It is assumed you are in the `yini-test-suite/` directory, and that you have the directory `yini-parser-python/` already alongside the directory `yini-test-suite`.
-
-Run:
-```bash
-task clean
-task install
-task test
-task run-smoke-python-lenient
-task run-smoke-python-strict
-```
-
-If you want to test the TypeScript parser instead, replace the last command with:
-```bash
-task run-smoke-typescript-lenient
-task run-smoke-typescript-strict
-```
-
-### Later runs
-
-Run these commands from the `yini-test-suite/` directory.
-
-Run:
-```bash
-task run-smoke-python-lenient
-task run-smoke-python-strict
-```
-
-or:
+## Install
 
 ```bash
-task run-smoke-typescript-lenient
-task run-smoke-typescript-strict
+python -m pip install yini-test-suite
 ```
 
-depending on which parser implementation you want to test.
+Check that the CLI is available:
 
----
+```bash
+yini-test-suite --help
+```
 
-## Expected local repository layout
+The package includes the shared smoke and golden case corpus, so normal installed
+usage does not require a separate `--cases-root` path.
 
-The predefined Taskfile commands assume that the parser repositories are located next to `yini-test-suite`:
+## Basic Usage
+
+Run the smoke suite against a parser adapter:
+
+```bash
+yini-test-suite smoke --adapter python path/to/adapter.py --input {input} --mode {mode}
+```
+
+Run all bundled cases in both lenient and strict mode:
+
+```bash
+yini-test-suite all --all-modes --adapter python path/to/adapter.py --input {input} --mode {mode}
+```
+
+Important: `--adapter` must be the last `yini-test-suite` option. Everything
+after `--adapter` is treated as part of the adapter command.
+
+The runner replaces:
+- `{input}` with the current `.yini` case path.
+- `{mode}` with `lenient` or `strict`.
+
+Use `--show-progress` if you also want a `RUN` line before each case:
+
+```bash
+yini-test-suite all --all-modes --show-progress --adapter python path/to/adapter.py --input {input} --mode {mode}
+```
+
+## Suites And Modes
+
+Suites:
+- `smoke` runs a smaller confidence suite.
+- `golden` runs the broader fixed-output conformance suite.
+- `all` runs both `smoke` and `golden`.
+
+Modes:
+- Lenient mode is the default.
+- `--strict` runs strict-mode cases.
+- `--all-modes` runs both lenient and strict mode and prints one combined summary.
+
+## Adapter Contract
+
+An adapter is a small command-line program owned by a parser implementation. It
+accepts an input file and parser mode, then prints parsed JSON to `stdout` on
+success or diagnostics to `stderr` on failure.
+
+The expected shape is:
+
+```bash
+adapter --input <path-to-yini-file> --mode <lenient|strict>
+```
+
+For details, see [docs/adapter-contract.md](./docs/adapter-contract.md).
+
+## Official Ecosystem Examples
+
+Parser-specific adapter scripts are maintained in their parser repositories, not
+in this runner package.
+
+However, this project provides official adapter integrations for
+`yini-parser-typescript` and `yini-parser-python` through ready-made command
+examples and Taskfile tasks. They are included to show working examples and
+because those parsers are part of the official YINI ecosystem.
+
+The expected sibling repository layout for those examples is:
 
 ```text
-/
-├─ yini-test-suite/
-├─ yini-parser-typescript/
-└─ yini-parser-python/
+YINI-lang-WORK/
+  yini-test-suite/
+  yini-parser-typescript/
+  yini-parser-python/
 ```
 
-Adapter paths are **relative to** this directory: `yini-test-suite/`:
-- The TypeScript parser adapter is expected at:  
-  `../yini-parser-typescript/dist-tools/tools/yini-test-adapter.js`
-- The Python parser adapter is expected at:  
-  `../yini-parser-python/tools/yini_parser_adapter.py`
-
-## Installing and running tests
-
-### 1. Clean local cache files
+Example TypeScript adapter command:
 
 ```bash
-task clean
+yini-test-suite all --all-modes --adapter node ../yini-parser-typescript/dist-tools/tools/yini-test-adapter.js --input {input} --mode {mode}
 ```
 
-This removes Python cache files and temporary tool caches.
-
-### 2. Install dependencies
+Example Python adapter command:
 
 ```bash
-task install
+yini-test-suite all --all-modes --adapter python ../yini-parser-python/tools/yini_parser_adapter.py --input {input} --mode {mode}
 ```
 
-This installs the development dependencies and installs `yini-test-suite` itself **in editable mode**.
-
-### 3. Show available tasks
-
-```bash
-task
-```
-
-### 4. Test `yini-test-suite` itself
-
-```bash
-task test
-```
-
-This runs the unit and integration tests for the `yini-test-suite` runner.
-
-A successful result should look similar to:
-```txt
-34 passed
-```
-
-### 5. Run smoke tests against `yini-parser-python`
-
-```bash
-task run-smoke-python-lenient
-task run-smoke-python-strict
-```
-
-This runs the smoke test cases against the Python parser adapter.
-
-The task uses a command similar to:
-```bash
-python -m yini_test smoke \
-  --cases-root src/yini_test/cases \
-  --adapter python ../yini-parser-python/tools/yini_parser_adapter.py --input {input} --mode {mode}
-```
-
-The `{input}` and `{mode}` placeholders are replaced automatically for each test case.
-
-### 6. Run all Python cases
-
-```bash
-task run-all-python
-```
-
-This runs the Python adapter against smoke lenient, smoke strict, golden lenient, and golden strict cases, then prints one combined summary.
-
-The task uses:
-```bash
-python -m yini_test all --all-modes \
-  --cases-root src/yini_test/cases \
-  --adapter python ../yini-parser-python/tools/yini_parser_adapter.py --input {input} --mode {mode}
-```
-
-### 7. Run all TypeScript cases
+When working from the source repository, the matching Taskfile commands are:
 
 ```bash
 task run-all-typescript
+task run-all-python
 ```
 
-This runs the TypeScript adapter against smoke lenient, smoke strict, golden lenient, and golden strict cases, then prints one combined summary.
+If these runs expose parser or adapter problems, fix those issues in the
+corresponding parser repository unless the shared case corpus or runner contract
+is wrong.
 
-The task uses:
-```bash
-python -m yini_test all --all-modes \
-  --cases-root src/yini_test/cases \
-  --adapter node ../yini-parser-typescript/dist-tools/tools/yini-test-adapter.js --input {input} --mode {mode}
+## Output
+
+A run starts with the runner name and version:
+
+```text
+yini-test-suite 0.3.0b2
 ```
 
-### 8. Understanding the result
+Each case is reported as `PASS` or `FAIL`, followed by a final summary:
 
-Each case is reported as `PASS` or `FAIL`.
-
-Example:
-```txt
-PASS  "cases\smoke\lenient\valid\1-minimal.yini"
-FAIL  "cases\smoke\lenient\valid\3-nested-sections.yini"
+```text
+YINI Test Suite Summary
+yini-test-suite: 0.3.0b2
+Adapter: yini-parser-typescript
+Parser version: 1.6.1
+YINI spec: 1.0.0 RC 6
+Test suite: "all"
 ```
 
-Use `--show-progress` to also print a `RUN` line before each case executes.
+For valid cases, the runner compares the adapter JSON output with the matching
+expected `.json` file. Warning cases also check expected warning diagnostics.
+Invalid cases are expected to fail.
 
-For valid cases, `yini-test-suite` compares the parser output with the matching expected JSON file.
+## What This Package Does Not Do
 
-For example:
-```txt
-cases/smoke/lenient/valid/3-nested-sections.yini
-```
+- It does not contain a YINI parser.
+- It does not define parser-specific parsing behavior.
+- It does not make parser-specific adapters part of the public `yini-test-suite`
+  Python API.
 
-is compared with:
-```txt
-cases/smoke/lenient/valid/3-nested-sections.json
-```
+## Development
 
-If a test case fails, `yini-test-suite` prints the difference showing the expected output and the actual parser output.
+For source checkout setup, Taskfile commands, local adapter runs, build checks,
+and troubleshooting, see [docs/Development-Setup.md](./docs/Development-Setup.md).
 
----
-
-## Project structure
-
-- `src/yini_test/__main__.py` is the package entry point.
-- `src/yini_test/cli.py` handles the command-line argument parsing.
-- `src/yini_test/runner.py` contains the core test-running logic.
-- `src/yini_test/cases/` contains the shared parser test case corpus.
-- `tests/` contains tests for this `yini-test-suite` project itself.
-
-Current case groups include:
-- `golden/` for cases where valid input must produce exact expected output.
-- `smoke/` for smaller practical cases used to catch obvious parser issues.
-
----
-
-## Adapters
-
-This project itself does not include adapters for specific parser implementations.
-
-Instead, each parser project/repository should provide and maintain its own adapter logic for `yini-test-suite` to call.
-
----
-
-## Related documents
-- [docs/adapter-contract.md](./docs/adapter-contract.md)
+Useful maintainer references:
 - [docs/case-contract.md](./docs/case-contract.md)
+- [docs/adapter-contract.md](./docs/adapter-contract.md)
 - [docs/runner-flow.md](./docs/runner-flow.md)
+- [docs/Maintainer-Doc.md](./docs/Maintainer-Doc.md)
 
----
+## About YINI
 
-**^YINI ≡**  
-> YINI is a human-readable, INI-inspired, indentation-insensitive configuration format with clear nested sections, explicit structure, and predictable parsing.
-> 
-> It has a formal specification and a defined grammar.
+YINI is a human-readable, INI-inspired, indentation-insensitive configuration
+format with clear nested sections, explicit structure, and predictable parsing.
 
-[yini-lang.org](https://yini-lang.org/?utm_source=github&utm_medium=referral&utm_campaign=yini_test&utm_content=readme_footer) · [YINI-lang on GitHub](https://github.com/YINI-lang)  
+[yini-lang.org](https://yini-lang.org/?utm_source=github&utm_medium=referral&utm_campaign=yini_test&utm_content=readme_footer) |
+[YINI-lang on GitHub](https://github.com/YINI-lang)
