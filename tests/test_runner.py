@@ -320,6 +320,7 @@ def test_run_suite_matrix_runs_groups_in_suite_then_mode_order(
     output = capsys.readouterr().out
 
     assert exit_code == 0
+    assert output.startswith("yini-test-suite 0.3.0b2\n")
     assert calls == [
         ("smoke", "lenient"),
         ("smoke", "strict"),
@@ -338,6 +339,7 @@ def test_run_suite_matrix_runs_groups_in_suite_then_mode_order(
     assert "golden   strict" in output
     assert "Result: PASS" in output
     assert "Summary: 4 passed, 0 failed, 4 total" in output
+    assert output.index("yini-test-suite 0.3.0b2") < output.index("PASS  ")
     assert output.index("YINI Test Suite Summary") < output.index(
         "yini-test-suite: 0.3.0b2"
     )

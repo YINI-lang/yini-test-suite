@@ -145,6 +145,8 @@ def run_case_groups(
     Run concrete suite/mode groups and print one combined summary.
     """
 
+    print(f"yini-test-suite {__version__}")
+
     started_at = time.perf_counter()
     total_passed = 0
     total_failed = 0

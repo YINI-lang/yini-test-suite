@@ -18,6 +18,8 @@ At the end of a run, the runner prints a terminal summary table showing the adap
 Summary: 169 passed, 4 failed, 173 total, duration 29.93 s
 ```
 
+Runner output starts with the `yini-test-suite` name and version before case processing begins.
+
 Per-case `PASS` and `FAIL` lines are always printed. Use `--show-progress` to also print a `RUN` line before each case executes.
 
 If any group fails, the summary includes a `Failed groups:` section with one line per failing suite/mode group.

@@ -2,6 +2,7 @@
 
 ## 0.3.0b2 - 2026 July
 - **Changed:** CLI help now prints the `yini-test-suite` name and version above the usage line.
+- **Changed:** Runner output now prints the `yini-test-suite` name and version before case processing starts.
 
 ## 0.3.0b1 - 2026 July
 - **Added:** Golden section cases for alternate markers, shorthand depths, separator forms, whitespace handling, and invalid marker/level jumps.
