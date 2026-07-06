@@ -171,6 +171,10 @@ your active environment first:
 python -m pip install --upgrade build twine
 ```
 
+```bash
+task clean
+```
+
 Then build the distribution:
 
 ```bash

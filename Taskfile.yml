@@ -188,6 +188,11 @@ tasks:
       - powershell -NoProfile -Command "if (Test-Path '.ruff_cache') { Remove-Item -Recurse -Force '.ruff_cache' }"
 
   clean:
-    desc: Delete caches only
+    desc: Delete build artifacts and caches
     deps:
       - clean-cache
+    cmds:
+      - cmd: rm -rf dist build src/*.egg-info
+        platforms: [linux, darwin]
+      - cmd: powershell -NoProfile -Command "if (Test-Path 'dist') { Remove-Item -Recurse -Force 'dist' }; if (Test-Path 'build') { Remove-Item -Recurse -Force 'build' }; Get-ChildItem 'src' -Directory -Filter '*.egg-info' -ErrorAction SilentlyContinue | Remove-Item -Recurse -Force"
+        platforms: [windows]
