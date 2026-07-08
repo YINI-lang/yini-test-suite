@@ -1,5 +1,7 @@
 # CHANGELOG
 
+**Changelog** for `yini-test-suite`.
+
 ## [Upcoming/Unreleased] - FUTURE
 
 ## 0.3.0b2 - 2026 July

@@ -9,6 +9,21 @@ reports pass/fail results consistently.
 
 The goal is to give different YINI parsers the same conformance target.
 
+## Help, Feedback, And Issues
+
+For bugs, feedback, or other issues with `yini-test-suite`, use the GitHub issue
+tracker:
+
+```text
+https://github.com/YINI-lang/yini-test-suite/issues
+```
+
+For general YINI information, see:
+- YINI homepage: [https://yini-lang.org](https://yini-lang.org?utm_source=github&utm_medium=referral&utm_campaign=yini_test&utm_content=readme_project_links)
+
+- YINI GitHub organization: https://github.com/YINI-lang
+- `yini-test-suite` repository: https://github.com/YINI-lang/yini-test-suite
+
 ## Install
 
 ```bash
