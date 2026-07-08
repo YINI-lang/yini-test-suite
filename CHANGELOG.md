@@ -1,5 +1,7 @@
 # CHANGELOG
 
+## [Upcoming/Unreleased] - FUTURE
+
 ## 0.3.0b2 - 2026 July
 - **Changed:** CLI help now prints the `yini-test-suite` name and version above the usage line.
 - **Changed:** Runner output now prints the `yini-test-suite` name and version before case processing starts.
