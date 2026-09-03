@@ -3,6 +3,7 @@
 **Changelog** for `yini-test-suite`.
 
 ## [Upcoming/Unreleased] - FUTURE
+- **Added:** Added Dependabot configuration for monthly npm and GitHub Actions dependency updates.
 
 ## 0.3.0b2 - 2026 July
 - **Changed:** CLI help now prints the `yini-test-suite` name and version above the usage line.
