@@ -9,22 +9,9 @@ reports pass/fail results consistently.
 
 The goal is to give different YINI parsers the same conformance target.
 
-## 💬 Help, Feedback, And Issues
-
-For bugs, feedback, or other issues with `yini-test-suite`, use the GitHub issue
-tracker:
-
-```text
-https://github.com/YINI-lang/yini-test-suite/issues
-```
-
-For general YINI information, see:
-- YINI homepage: [https://yini-lang.org](https://yini-lang.org?utm_source=github&utm_medium=referral&utm_campaign=yini_test&utm_content=readme_project_links)
-
-- YINI GitHub organization: https://github.com/YINI-lang
-- `yini-test-suite` repository: https://github.com/YINI-lang/yini-test-suite
-
 ## 📦 Install
+
+Requires Python 3.10 or newer.
 
 ```bash
 python -m pip install yini-test-suite
@@ -44,13 +31,13 @@ usage does not require a separate `--cases-root` path.
 Run the smoke suite against a parser adapter:
 
 ```bash
-yini-test-suite smoke --adapter python path/to/adapter.py --input {input} --mode {mode}
+yini-test-suite smoke --adapter python path/to/adapter.py --input "{input}" --mode "{mode}"
 ```
 
 Run all bundled cases in both lenient and strict mode:
 
 ```bash
-yini-test-suite all --all-modes --adapter python path/to/adapter.py --input {input} --mode {mode}
+yini-test-suite all --all-modes --adapter python path/to/adapter.py --input "{input}" --mode "{mode}"
 ```
 
 Important: `--adapter` must be the last `yini-test-suite` option. Everything
@@ -63,10 +50,13 @@ The runner replaces:
 Use `--show-progress` if you also want a `RUN` line before each case:
 
 ```bash
-yini-test-suite all --all-modes --show-progress --adapter python path/to/adapter.py --input {input} --mode {mode}
+yini-test-suite all --all-modes --show-progress --adapter python path/to/adapter.py --input "{input}" --mode "{mode}"
 ```
 
-## 🧪 Suites And Modes
+The double quotes around the placeholders make these commands work in Bash,
+PowerShell, and Windows Command Prompt.
+
+## 🧪 Suites and modes
 
 Suites:
 - `smoke` runs a smaller confidence suite.
@@ -98,9 +88,11 @@ Parser-specific adapter scripts are maintained in their parser repositories, not
 in this runner package.
 
 However, this project provides official adapter integrations for
-`yini-parser-typescript` and `yini-parser-python` through ready-made command
-examples and Taskfile tasks. They are included to show working examples and
-because those parsers are part of the official YINI ecosystem.
+[`yini-parser-typescript`](https://github.com/YINI-lang/yini-parser-typescript)
+and [`yini-parser-python`](https://github.com/YINI-lang/yini-parser-python)
+through ready-made command examples and Taskfile tasks. They are included to
+show working examples and because those parsers are part of the official YINI
+ecosystem.
 
 The expected sibling repository layout for those examples is:
 
@@ -114,13 +106,13 @@ YINI-lang-WORK/
 Example TypeScript adapter command:
 
 ```bash
-yini-test-suite all --all-modes --adapter node ../yini-parser-typescript/dist-tools/tools/yini-test-adapter.js --input {input} --mode {mode}
+yini-test-suite all --all-modes --adapter node ../yini-parser-typescript/dist-tools/tools/yini-test-adapter.js --input "{input}" --mode "{mode}"
 ```
 
 Example Python adapter command:
 
 ```bash
-yini-test-suite all --all-modes --adapter python ../yini-parser-python/tools/yini_parser_adapter.py --input {input} --mode {mode}
+yini-test-suite all --all-modes --adapter python ../yini-parser-python/tools/yini_parser_adapter.py --input "{input}" --mode "{mode}"
 ```
 
 When working from the source repository, the matching Taskfile commands are:
@@ -174,6 +166,16 @@ Useful maintainer references:
 - [docs/adapter-contract.md](./docs/adapter-contract.md)
 - [docs/runner-flow.md](./docs/runner-flow.md)
 - [docs/Maintainer-Doc.md](./docs/Maintainer-Doc.md)
+
+## 💬 Help, feedback, and issues
+
+For bugs, feedback, or other issues with `yini-test-suite`,
+[open an issue](https://github.com/YINI-lang/yini-test-suite/issues).
+
+For general YINI information, see:
+- [YINI homepage](https://yini-lang.org?utm_source=github&utm_medium=referral&utm_campaign=yini_test&utm_content=readme_project_links)
+- [YINI GitHub organization](https://github.com/YINI-lang)
+- [`yini-test-suite` repository](https://github.com/YINI-lang/yini-test-suite)
 
 ## About YINI
 
