@@ -360,7 +360,7 @@ def test_run_suite_matrix_runs_groups_in_suite_then_mode_order(
     output = capsys.readouterr().out
 
     assert exit_code == 0
-    assert output.startswith("yini-test-suite 0.3.0b2\n")
+    assert output.startswith("yini-test-suite 0.3.0rc1\n")
     assert calls == [
         ("smoke", "lenient"),
         ("smoke", "strict"),
@@ -370,7 +370,7 @@ def test_run_suite_matrix_runs_groups_in_suite_then_mode_order(
     assert "YINI Test Suite Summary" in output
     assert "Adapter: adapter" in output
     assert "Parser version: not detected" in output
-    assert "yini-test-suite: 0.3.0b2" in output
+    assert "yini-test-suite: 0.3.0rc1" in output
     assert 'Test suite: "all"' in output
     assert "YINI spec: 1.0.0 RC 6" in output
     assert "PASS  " in output
@@ -379,11 +379,11 @@ def test_run_suite_matrix_runs_groups_in_suite_then_mode_order(
     assert "golden   strict" in output
     assert "Result: PASS" in output
     assert "Summary: 4 passed, 0 failed, 4 total" in output
-    assert output.index("yini-test-suite 0.3.0b2") < output.index("PASS  ")
+    assert output.index("yini-test-suite 0.3.0rc1") < output.index("PASS  ")
     assert output.index("YINI Test Suite Summary") < output.index(
-        "yini-test-suite: 0.3.0b2"
+        "yini-test-suite: 0.3.0rc1"
     )
-    assert output.index("yini-test-suite: 0.3.0b2") < output.index("Adapter: adapter")
+    assert output.index("yini-test-suite: 0.3.0rc1") < output.index("Adapter: adapter")
     assert output.index("Adapter: adapter") < output.index(
         "Parser version: not detected"
     )
@@ -450,7 +450,7 @@ def test_run_suite_matrix_summary_lists_failed_groups(
     assert exit_code == 1
     assert "Adapter: yini-parser-typescript" in output
     assert "Parser version: 1.6.0" in output
-    assert "yini-test-suite: 0.3.0b2" in output
+    assert "yini-test-suite: 0.3.0rc1" in output
     assert 'Test suite: "all"' in output
     assert "YINI spec: 1.0.0 RC 6" in output
     assert "Summary: 3 passed, 1 failed, 4 total" in output

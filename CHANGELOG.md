@@ -2,8 +2,8 @@
 
 **Changelog** for `yini-test-suite`.
 
-## [Upcoming/Unreleased] - FUTURE
-- **Added:** Golden fixtures for CR-only line endings in strict mode and strict-mode rejection of token-splitting comments and raw control characters.
+## 0.3.0rc1 - 2026 September
+- **Added:** Golden fixtures for CR and LF -only line endings in strict mode, and strict-mode rejection of token-splitting comments and raw control characters.
 - **Added:** Golden fixtures that verify control markers remain string content and duplicate keys are scoped to their containing sections and inline objects in both parser modes.
 - **Fixed:** JSON expectation and adapter output validation now reject non-standard `NaN` and infinity values.
 - **Fixed:** JSON comparisons now distinguish booleans from numbers, so `true` no longer matches `1`.

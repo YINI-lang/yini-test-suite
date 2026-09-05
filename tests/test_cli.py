@@ -102,5 +102,5 @@ def test_build_parser_help_starts_with_name_and_version() -> None:
     help_text = parser.format_help()
     help_lines = help_text.splitlines()
 
-    assert help_lines[0] == "yini-test-suite 0.3.0b2"
+    assert help_lines[0] == "yini-test-suite 0.3.0rc1"
     assert help_lines[1].startswith("usage:")
