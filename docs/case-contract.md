@@ -45,7 +45,6 @@ cases/
       valid/
       warning/
       invalid/
-  edge/
 ```
 
 ---
@@ -76,8 +75,10 @@ Smoke cases are small, practical tests used as a quick confidence check. They sh
 ### Golden
 Golden cases are tests with fixed expected output. They verify that a parser produces the correct result for known input.
 
-### Edge
+### Edge (reserved)
 Edge cases focus on unusual, subtle, or boundary behavior, such as empty values, duplicate keys, repeated sections, string escapes, numeric corner cases, and nesting limits.
+
+The current runner supports only `smoke`, `golden`, and their combined `all` selection. `edge` is reserved for a future suite and must not be added to the corpus until runner support is introduced.
 
 ---
 
@@ -199,9 +200,9 @@ YINI input files that are expected to be parsed in strict mode MAY end with `.st
 
 ## JSON expectations
 
-Expected `.json` files must contain valid, machine-readable JSON and represent the canonical expected parsed output for the case.
+Expected `.json` files must contain valid, machine-readable JSON and represent the canonical expected parsed output for the case. Non-standard values such as `NaN` and `Infinity` are not valid JSON and are rejected.
 
-For valid cases, `yini-test-suite` compares the parsed JSON values, not raw text formatting. Differences in whitespace or indentation do not matter; the data structure itself must match.
+For valid cases, `yini-test-suite` compares the parsed JSON values, not raw text formatting. Differences in whitespace or indentation do not matter; the data structure itself must match. Boolean values and numbers are distinct, so `true` does not match `1`.
 
 Expected `.json` SHOULD still be pretty-formatted (using 4-space indentation) so it's nicer for humans to read during debugging and development.
 

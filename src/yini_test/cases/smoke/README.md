@@ -9,7 +9,7 @@ smoke/<mode>/<expected>/<fixture-files...>
 
 Where:
 - **mode** is either `lenient` or `strict` parser mode used when a fixture is parsed.
-- **expected** is either `valid` or `invalid`, and defines whether the fixture is parsed successfully or not.
+- **expected** is `valid`, `warning`, or `invalid`, and defines whether the fixture succeeds, succeeds with expected diagnostics, or fails.
 - **fixture-files** are the `.yini` files in that directory. Each file covers some practical smoke-test feature(s).
 
 ## Scope

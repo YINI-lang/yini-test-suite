@@ -35,6 +35,7 @@ from yini_test.discovery import (
     discover_warning_cases,
 )
 from yini_test.expectations import (
+    json_values_match,
     load_expected_json,
     load_expected_warnings,
     match_expected_warnings,
@@ -515,6 +516,19 @@ def run_case_group(
     warning_cases = discover_warning_cases(suite_dir / "warning")
     invalid_cases = discover_invalid_cases(suite_dir / "invalid")
 
+    if not valid_cases and not warning_cases and not invalid_cases:
+        return [
+            CaseResult(
+                case_path=suite_dir,
+                passed=False,
+                message=(
+                    f"No test cases were found for suite group: {suite_name} / {mode}\n"
+                    f"Case directory: {suite_dir}\n"
+                    "Hint: Add at least one .yini case under valid, warning, or invalid."
+                ),
+            )
+        ]
+
     results: list[CaseResult] = []
 
     for valid_case in valid_cases:
@@ -585,7 +599,7 @@ def run_valid_case(
             message=str(exc),
         )
 
-    if actual == expected:
+    if json_values_match(expected, actual):
         return CaseResult(case_path=case.yini_path, passed=True)
 
     diff = make_diff(expected, actual)
@@ -654,7 +668,7 @@ def run_warning_case(
             message=str(exc),
         )
 
-    if actual_json != expected_json:
+    if not json_values_match(expected_json, actual_json):
         diff = make_diff(expected_json, actual_json)
         return CaseResult(
             case_path=case.yini_path,

@@ -9,7 +9,7 @@ golden/<mode>/<expected>/<category>/<fixture-files...>
 
 Where:
 - **mode** is either `lenient` or `strict`, indicating the parser mode used, when parsing a fixture.
-- **expected** is either `valid` or `invalid`, and defines whether the fixture is parsed successfully or not.
+- **expected** is `valid`, `warning`, or `invalid`, and defines whether the fixture succeeds, succeeds with expected diagnostics, or fails.
 - **category** is the feature group being tested.
 - **fixture-files** are the `.yini` files in that category. Each file covers a group of related cases for a specific feature type.
 

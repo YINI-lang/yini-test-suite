@@ -20,7 +20,7 @@ So, in practice, for example:
 - `yini-parser-python` contains its own Python adapter.
 - And so on.
 
-This means each project/repository owns its own adapter and is responsible for making it follow the rules defined in [docs/adapter-contract.md](./docs/adapter-contract.md).
+This means each project/repository owns its own adapter and is responsible for making it follow the rules defined in [the adapter contract](./adapter-contract.md).
 
 Suggested locations for the adapter:
 - `tools/yini-test-adapter.ts`

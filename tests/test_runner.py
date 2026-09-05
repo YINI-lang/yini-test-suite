@@ -6,20 +6,30 @@ from pathlib import Path
 
 import pytest
 
-from yini_test.adapters import render_adapter_command
+from yini_test.adapters import parse_adapter_stdout_json, render_adapter_command
 from yini_test.diffing import make_diff
 from yini_test.discovery import (
     discover_invalid_cases,
     discover_valid_cases,
     get_expected_json_path,
 )
-from yini_test.models import CaseResult, InvalidCase, ValidCase
+from yini_test.expectations import json_values_match, load_expected_json
+from yini_test.models import (
+    AdapterResult,
+    CaseResult,
+    InvalidCase,
+    ValidCase,
+    WarningCase,
+)
 from yini_test.runner import (
     detect_parser_version,
     format_adapter_name,
     format_summary_rule,
     get_yini_spec_revision,
+    run_case_group,
     run_valid_case,
+    run_warning_case,
+    run_suite,
     run_suite_matrix,
     _resolve_suite_names,
 )
@@ -231,6 +241,36 @@ def test_make_diff_contains_expected_and_actual_output() -> None:
     assert '"enabled": true' in diff
     assert '"enabled": false' in diff
     assert "Mismatched block:" in diff
+
+
+@pytest.mark.parametrize("content", ["NaN", "Infinity", "-Infinity"])
+def test_load_expected_json_rejects_non_standard_json_constants(
+    tmp_path: Path,
+    content: str,
+) -> None:
+    # Arrange.
+    json_path = tmp_path / "expected.json"
+    json_path.write_text(content, encoding="utf-8")
+
+    # Act and assert.
+    with pytest.raises(RuntimeError, match="not valid JSON"):
+        load_expected_json(json_path)
+
+
+@pytest.mark.parametrize("output", ["NaN", "Infinity", "-Infinity"])
+def test_parse_adapter_stdout_json_rejects_non_standard_json_constants(
+    output: str,
+) -> None:
+    # Act and assert.
+    with pytest.raises(RuntimeError, match="not valid JSON"):
+        parse_adapter_stdout_json(output, case_name="case.yini")
+
+
+def test_json_values_match_distinguishes_booleans_from_numbers() -> None:
+    # Act and assert.
+    assert not json_values_match({"enabled": True}, {"enabled": 1})
+    assert not json_values_match([False], [0])
+    assert json_values_match({"value": 1}, {"value": 1.0})
 
 
 def test_resolve_suite_names_for_smoke() -> None:
@@ -517,6 +557,113 @@ def test_run_valid_case_shows_run_line_with_show_progress(
 
     assert result.passed is True
     assert f'RUN   "{yini_path}"' in output
+
+
+def test_run_valid_case_fails_when_boolean_is_returned_as_number(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+) -> None:
+    # Arrange.
+    yini_path = tmp_path / "case.yini"
+    json_path = tmp_path / "case.json"
+    case = ValidCase(yini_path=yini_path, json_path=json_path)
+
+    json_path.write_text('{"enabled": true}', encoding="utf-8")
+    monkeypatch.setattr(
+        "yini_test.runner.run_adapter",
+        lambda adapter_tokens, input_path, mode: {"enabled": 1},
+    )
+
+    # Act.
+    result = run_valid_case(case, adapter_tokens=["adapter"], mode="lenient")
+
+    # Assert.
+    assert result.passed is False
+    assert "Output mismatch for valid case" in result.message
+
+
+def test_run_warning_case_fails_when_boolean_is_returned_as_number(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+) -> None:
+    # Arrange.
+    yini_path = tmp_path / "case.yini"
+    json_path = tmp_path / "case.json"
+    warning_path = tmp_path / "case.warning.json"
+    case = WarningCase(
+        yini_path=yini_path,
+        json_path=json_path,
+        warning_path=warning_path,
+    )
+
+    json_path.write_text('{"enabled": true}', encoding="utf-8")
+    warning_path.write_text('[{"contains": "mode mismatch"}]', encoding="utf-8")
+    monkeypatch.setattr(
+        "yini_test.runner.run_adapter_raw",
+        lambda adapter_tokens, input_path, mode: AdapterResult(
+            stdout='{"enabled": 1}',
+            stderr="mode mismatch",
+            returncode=0,
+        ),
+    )
+
+    # Act.
+    result = run_warning_case(case, adapter_tokens=["adapter"], mode="strict")
+
+    # Assert.
+    assert result.passed is False
+    assert "Output mismatch for warning case" in result.message
+
+
+def test_run_case_group_returns_failure_for_empty_group(tmp_path: Path) -> None:
+    # Arrange.
+    suite_dir = tmp_path / "smoke" / "lenient"
+    suite_dir.mkdir(parents=True)
+
+    # Act.
+    results = run_case_group(
+        suite_name="smoke",
+        mode="lenient",
+        cases_root=tmp_path,
+        adapter_tokens=["adapter"],
+    )
+
+    # Assert.
+    assert len(results) == 1
+    assert results[0].case_path == suite_dir
+    assert results[0].passed is False
+    assert (
+        "No test cases were found for suite group: smoke / lenient"
+        in results[0].message
+    )
+
+
+def test_run_suite_fails_for_empty_group(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    # Arrange.
+    (tmp_path / "smoke" / "lenient").mkdir(parents=True)
+    monkeypatch.setattr(
+        "yini_test.runner.detect_parser_version",
+        lambda adapter_tokens: "not detected",
+    )
+
+    # Act.
+    exit_code = run_suite(
+        suite="smoke",
+        mode="lenient",
+        cases_root=tmp_path,
+        adapter_tokens=["adapter"],
+    )
+
+    # Assert.
+    output = capsys.readouterr().out
+
+    assert exit_code == 1
+    assert "No test cases were found for suite group: smoke / lenient" in output
+    assert "Summary: 0 passed, 1 failed, 1 total" in output
 
 
 def test_format_adapter_name_prefers_yini_parser_repository_name() -> None:
