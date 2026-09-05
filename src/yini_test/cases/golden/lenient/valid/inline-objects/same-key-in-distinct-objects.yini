@@ -1,0 +1,5 @@
+@yini
+
+^ Objects
+first = { name: "first" }
+second = { name: "second" }

@@ -1,0 +1,6 @@
+@yini strict
+
+^ Application
+na#me = "strict-comment-splits-token"
+
+/END

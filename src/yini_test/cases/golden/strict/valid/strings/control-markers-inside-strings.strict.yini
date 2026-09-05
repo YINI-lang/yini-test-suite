@@ -1,0 +1,9 @@
+@yini strict
+
+^ Strings
+quoted = "@yini /END // # /* --"
+triple = """@yini
+/END // # /* --"""
+raw = R"@yini /END // # /* --"
+
+/END

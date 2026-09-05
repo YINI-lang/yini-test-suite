@@ -14,6 +14,12 @@ from yini_test.models import AdapterResult
 from yini_test.utils.executables import resolve_executable
 
 
+def _reject_non_standard_json_constant(value: str) -> None:
+    """Reject values that Python accepts but JSON does not define."""
+
+    raise ValueError(f"Non-standard JSON value: {value}")
+
+
 def render_adapter_command(
     adapter_tokens: list[str],
     input_path: Path,
@@ -128,8 +134,11 @@ def parse_adapter_stdout_json(stdout: str, case_name: str) -> Any:
         raise RuntimeError(f"Adapter produced no JSON output for case: {case_name}")
 
     try:
-        return json.loads(output)
-    except json.JSONDecodeError as exc:
+        return json.loads(
+            output,
+            parse_constant=_reject_non_standard_json_constant,
+        )
+    except (json.JSONDecodeError, ValueError) as exc:
         raise RuntimeError(
             f"Adapter output was not valid JSON for case: {case_name}\n"
             f"Error: {exc}\n"

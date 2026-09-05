@@ -22,4 +22,6 @@ Runner output starts with the `yini-test-suite` name and version before case pro
 
 Per-case `PASS` and `FAIL` lines are always printed. Use `--show-progress` to also print a `RUN` line before each case executes.
 
+A selected suite/mode group must contain at least one case. An empty group is reported as a failure so a malformed or empty custom case root cannot produce a false passing run.
+
 If any group fails, the summary includes a `Failed groups:` section with one line per failing suite/mode group.

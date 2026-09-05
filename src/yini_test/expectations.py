@@ -10,6 +10,12 @@ import json
 from typing import Any
 
 
+def _reject_non_standard_json_constant(value: str) -> None:
+    """Reject values that Python accepts but JSON does not define."""
+
+    raise ValueError(f"Non-standard JSON value: {value}")
+
+
 def load_expected_json(path: Path) -> Any:
     """
     Load an expected JSON file.
@@ -20,8 +26,8 @@ def load_expected_json(path: Path) -> Any:
 
     try:
         with path.open("r", encoding="utf-8-sig") as f:
-            return json.load(f)
-    except json.JSONDecodeError as exc:
+            return json.load(f, parse_constant=_reject_non_standard_json_constant)
+    except (json.JSONDecodeError, ValueError) as exc:
         raise RuntimeError(
             "Expected JSON file is not valid JSON.\n"
             f'  json_path: "{path}"\n'
@@ -73,6 +79,42 @@ def load_expected_warnings(path: Path) -> list[dict[str, Any]]:
             )
 
     return warnings_data
+
+
+def json_values_match(expected: Any, actual: Any) -> bool:
+    """Compare JSON values without treating booleans as numbers.
+
+    Python considers ``True == 1`` and ``False == 0``. Those values have
+    different meanings in JSON, so comparisons must keep their types distinct.
+    Integer and floating-point numbers remain comparable by numeric value,
+    matching the JSON number data model.
+    """
+
+    if isinstance(expected, dict):
+        if not isinstance(actual, dict) or expected.keys() != actual.keys():
+            return False
+
+        return all(json_values_match(expected[key], actual[key]) for key in expected)
+
+    if isinstance(expected, list):
+        if not isinstance(actual, list) or len(expected) != len(actual):
+            return False
+
+        return all(
+            json_values_match(expected_item, actual_item)
+            for expected_item, actual_item in zip(expected, actual)
+        )
+
+    if isinstance(expected, bool) or isinstance(actual, bool):
+        return type(expected) is type(actual) and expected == actual
+
+    if expected is None or actual is None:
+        return expected is actual
+
+    if isinstance(expected, (int, float)) and isinstance(actual, (int, float)):
+        return expected == actual
+
+    return type(expected) is type(actual) and expected == actual
 
 
 def match_expected_warnings(

@@ -1,0 +1,10 @@
+@yini strict
+
+^ Document
+^^ First
+name = "first"
+
+^^ Second
+name = "second"
+
+/END
