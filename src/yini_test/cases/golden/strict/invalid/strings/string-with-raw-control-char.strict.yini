@@ -1,0 +1,6 @@
+@yini strict
+
+^ Strings
+key = "alpha	beta"
+
+/END

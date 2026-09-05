@@ -3,7 +3,8 @@
 **Changelog** for `yini-test-suite`.
 
 ## [Upcoming/Unreleased] - FUTURE
-- **Added:** Added Dependabot configuration for monthly npm and GitHub Actions dependency updates.
+- **Added:** Golden fixtures for CR-only line endings in strict mode and strict-mode rejection of token-splitting comments and raw control characters.
+- **Added:** Golden fixtures that verify control markers remain string content and duplicate keys are scoped to their containing sections and inline objects in both parser modes.
 
 ## 0.3.0b2 - 2026 July
 - **Changed:** CLI help now prints the `yini-test-suite` name and version above the usage line.
