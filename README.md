@@ -9,7 +9,7 @@ reports pass/fail results consistently.
 
 The goal is to give different YINI parsers the same conformance target.
 
-## Help, Feedback, And Issues
+## 💬 Help, Feedback, And Issues
 
 For bugs, feedback, or other issues with `yini-test-suite`, use the GitHub issue
 tracker:
@@ -24,7 +24,7 @@ For general YINI information, see:
 - YINI GitHub organization: https://github.com/YINI-lang
 - `yini-test-suite` repository: https://github.com/YINI-lang/yini-test-suite
 
-## Install
+## 📦 Install
 
 ```bash
 python -m pip install yini-test-suite
@@ -39,7 +39,7 @@ yini-test-suite --help
 The package includes the shared smoke and golden case corpus, so normal installed
 usage does not require a separate `--cases-root` path.
 
-## Basic Usage
+## 🚀 Basic Usage
 
 Run the smoke suite against a parser adapter:
 
@@ -66,7 +66,7 @@ Use `--show-progress` if you also want a `RUN` line before each case:
 yini-test-suite all --all-modes --show-progress --adapter python path/to/adapter.py --input {input} --mode {mode}
 ```
 
-## Suites And Modes
+## 🧪 Suites And Modes
 
 Suites:
 - `smoke` runs a smaller confidence suite.
@@ -78,7 +78,7 @@ Modes:
 - `--strict` runs strict-mode cases.
 - `--all-modes` runs both lenient and strict mode and prints one combined summary.
 
-## Adapter Contract
+## 🔌 Adapter Contract
 
 An adapter is a small command-line program owned by a parser implementation. It
 accepts an input file and parser mode, then prints parsed JSON to `stdout` on
@@ -164,7 +164,7 @@ Invalid cases are expected to fail.
 - It does not make parser-specific adapters part of the public `yini-test-suite`
   Python API.
 
-## Development
+## 🛠️ Development
 
 For source checkout setup, Taskfile commands, local adapter runs, build checks,
 and troubleshooting, see [docs/Development-Setup.md](./docs/Development-Setup.md).
