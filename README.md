@@ -30,6 +30,12 @@ usage does not require a separate `--cases-root` path.
 
 Run the smoke suite against a parser adapter:
 
+`yini-test-suite` includes the runner and test cases, not a parser adapter.
+Get an adapter from the parser implementation you want to test, then replace
+`path/to/adapter.py` below with its path. See
+[docs/adapter-contract.md](./docs/adapter-contract.md) for the required
+interface.
+
 ```bash
 yini-test-suite smoke --adapter python path/to/adapter.py --input "{input}" --mode "{mode}"
 ```
@@ -87,12 +93,11 @@ For details, see [docs/adapter-contract.md](./docs/adapter-contract.md).
 Parser-specific adapter scripts are maintained in their parser repositories, not
 in this runner package.
 
-However, this project provides official adapter integrations for
-[`yini-parser-typescript`](https://github.com/YINI-lang/yini-parser-typescript)
-and [`yini-parser-python`](https://github.com/YINI-lang/yini-parser-python)
-through ready-made command examples and Taskfile tasks. They are included to
-show working examples and because those parsers are part of the official YINI
-ecosystem.
+This repository documents source-checkout commands and provides Taskfile tasks
+for [`yini-parser-typescript`](https://github.com/YINI-lang/yini-parser-typescript)
+and [`yini-parser-python`](https://github.com/YINI-lang/yini-parser-python).
+Those examples require the corresponding sibling repository and its adapter;
+they are not included in an installed `yini-test-suite` package.
 
 The expected sibling repository layout for those examples is:
 
