@@ -178,7 +178,7 @@ For bugs, feedback, or other issues with `yini-test-suite`,
 [open an issue](https://github.com/YINI-lang/yini-test-suite/issues).
 
 For general YINI information, see:
-- [YINI homepage](https://yini-lang.org?utm_source=github&utm_medium=referral&utm_campaign=yini_test&utm_content=readme_project_links)
+- [YINI homepage](https://yini-lang.org/?utm_source=github&utm_campaign=yini_test&utm_content=readme_project_links&utm_medium=referral)
 - [YINI GitHub organization](https://github.com/YINI-lang)
 - [`yini-test-suite` repository](https://github.com/YINI-lang/yini-test-suite)
 
@@ -187,5 +187,5 @@ For general YINI information, see:
 YINI is a human-readable, INI-inspired, indentation-insensitive configuration
 format with clear nested sections, explicit structure, and predictable parsing.
 
-[yini-lang.org](https://yini-lang.org/?utm_source=github&utm_medium=referral&utm_campaign=yini_test&utm_content=readme_footer) |
+[yini-lang.org](https://yini-lang.org/?utm_source=github&utm_campaign=yini_test&utm_content=readme_footer&utm_medium=referral) |
 [YINI-lang on GitHub](https://github.com/YINI-lang)
