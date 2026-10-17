@@ -1,0 +1,6 @@
+@yini strict
+
+^ `path\\name`
+value = "escaped backslash"
+
+/END

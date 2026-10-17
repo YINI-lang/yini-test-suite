@@ -1,0 +1,4 @@
+@yini
+
+^ Keys
+`path\\name` = "escaped backslash"

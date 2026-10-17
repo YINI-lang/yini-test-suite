@@ -2,6 +2,9 @@
 
 **Changelog** for `yini-test-suite`.
 
+## Upcomming
+- **Added:** Golden cases for backslash escapes in **backticked keys and section names** (`\\` -> `\`) in lenient and strict modes.
+
 ## 0.3.0rc1 - 2026 September
 - **Added:** Golden fixtures for CR and LF -only line endings in strict mode, and strict-mode rejection of token-splitting comments and raw control characters.
 - **Added:** Golden fixtures that verify control markers remain string content and duplicate keys are scoped to their containing sections and inline objects in both parser modes.
