@@ -1,5 +1,8 @@
 # yini-test-suite
 
+[![Tests](https://github.com/YINI-lang/yini-test-suite/actions/workflows/run-tests-fast.yml/badge.svg?branch=main)](https://github.com/YINI-lang/yini-test-suite/actions/workflows/run-tests-fast.yml)
+[![PyPI version](https://img.shields.io/pypi/v/yini-test-suite)](https://pypi.org/project/yini-test-suite/)
+
 `yini-test-suite` is the shared command-line test runner and case corpus for
 YINI parser implementations.
 
