@@ -4,6 +4,7 @@
 
 ## Upcomming
 - **Added:** Golden cases for backslash escapes in **backticked keys and section names** (`\\` -> `\`) in lenient and strict modes.
+- **Added:** Lenient and strict golden cases for lowercase, uppercase, and mixed-case Boolean and null spellings as distinct inline object key names.
 
 ## 0.3.0rc1 - 2026 September
 - **Added:** Golden fixtures for CR and LF -only line endings in strict mode, and strict-mode rejection of token-splitting comments and raw control characters.

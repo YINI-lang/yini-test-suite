@@ -1,0 +1,28 @@
+@yini strict
+
+^ Objects
+spellings = {
+    true: 1,
+    false: 2,
+    yes: 3,
+    no: 4,
+    on: 5,
+    off: 6,
+    null: 7,
+    TRUE: 8,
+    FALSE: 9,
+    YES: 10,
+    NO: 11,
+    ON: 12,
+    OFF: 13,
+    NULL: 14,
+    TrUe: 15,
+    FaLsE: 16,
+    YeS: 17,
+    nO: 18,
+    oN: 19,
+    OfF: 20,
+    NuLl: 21
+}
+
+/END
