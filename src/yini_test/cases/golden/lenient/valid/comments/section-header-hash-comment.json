@@ -1,0 +1,11 @@
+{
+    "Root": {
+        "rootValue": 1,
+        "CompactChild": {
+            "value": 2
+        },
+        "NumberedChild": {
+            "value": 3
+        }
+    }
+}
