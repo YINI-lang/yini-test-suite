@@ -1,6 +1,6 @@
 {
     "Concat": {
-        "message": "prefix: multi\nline"
+        "message": "prefix: multi\r\nline"
     }
 }
 
