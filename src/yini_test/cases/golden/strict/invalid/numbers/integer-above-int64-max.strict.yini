@@ -1,0 +1,6 @@
+@yini strict
+
+^ Numbers
+value = 9223372036854775808
+
+/END

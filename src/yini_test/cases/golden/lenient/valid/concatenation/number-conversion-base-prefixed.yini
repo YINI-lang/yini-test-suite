@@ -1,0 +1,9 @@
+@yini
+
+^ Concat
+hexadecimal = "n: " + 0xFF
+hexPrefix = "n: " + hex:FF
+binary = "n: " + 0b1010
+binaryPercent = "n: " + %1010
+octal = "n: " + 0o10
+duodecimal = "n: " + 0zX

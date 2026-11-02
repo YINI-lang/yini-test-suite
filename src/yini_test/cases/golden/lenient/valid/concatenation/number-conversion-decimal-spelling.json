@@ -1,0 +1,10 @@
+{
+    "Concat": {
+        "separator": "n: 1000",
+        "plus": "n: 100",
+        "fraction": "n: 1.50",
+        "exponent": "n: 3e04",
+        "unchangedExponent": "n: 1e3",
+        "negativeZero": "n: -0"
+    }
+}

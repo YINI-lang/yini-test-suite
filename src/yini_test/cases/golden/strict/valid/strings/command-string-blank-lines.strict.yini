@@ -1,0 +1,10 @@
+@yini strict
+
+^ Strings
+script = command"""
+  first
+
+  second
+"""
+
+/END

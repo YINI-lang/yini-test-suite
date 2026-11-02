@@ -1,0 +1,4 @@
+@yini
+
+^ Objects
+entry = { enabled: true, retries = 3 }

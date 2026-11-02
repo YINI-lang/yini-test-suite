@@ -1,0 +1,6 @@
+{
+    "Strings": {
+        "upper": "first line\nsecond\tline",
+        "lower": "escaped\nnewline"
+    }
+}

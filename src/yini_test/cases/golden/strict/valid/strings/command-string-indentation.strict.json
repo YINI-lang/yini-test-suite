@@ -1,0 +1,5 @@
+{
+    "Strings": {
+        "build": "npm install\n  npm run build\nnpm test"
+    }
+}

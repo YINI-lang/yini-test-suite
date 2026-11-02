@@ -1,0 +1,8 @@
+@yini strict
+
+^ Strings
+script = command"""
+  first
+""" trailing
+
+/END

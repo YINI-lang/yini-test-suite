@@ -1,0 +1,4 @@
+@yini
+
+^ Strings
+value = E"bad\z"

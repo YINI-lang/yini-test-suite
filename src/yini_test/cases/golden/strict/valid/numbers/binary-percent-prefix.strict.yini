@@ -1,0 +1,7 @@
+@yini strict
+
+^ Numbers
+value = %1010
+withSeparator = %_1010
+
+/END

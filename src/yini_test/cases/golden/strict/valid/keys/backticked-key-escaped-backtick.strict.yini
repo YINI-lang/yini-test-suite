@@ -1,0 +1,6 @@
+@yini strict
+
+^ Keys
+`a\`b` = "value"
+
+/END

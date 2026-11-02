@@ -1,0 +1,7 @@
+@yini strict
+
+^ Strings
+upper = E"line\nnext"
+lower = e'col\tvalue'
+
+/END

@@ -1,0 +1,6 @@
+@yini
+
+item = 1
+
+^ item
+value = 2

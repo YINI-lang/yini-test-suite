@@ -1,0 +1,6 @@
+@yini
+
+^ Strings
+upper = E"""first line
+second\tline"""
+lower = e"""escaped\nnewline"""
