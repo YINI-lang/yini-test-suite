@@ -377,7 +377,7 @@ def test_run_suite_matrix_runs_groups_in_suite_then_mode_order(
     assert "RUN   " not in output
     assert "smoke    lenient" in output
     assert "golden   strict" in output
-    assert "Result: PASS" in output
+    assert "Result:  PASS" in output
     assert "Summary: 4 passed, 0 failed, 4 total" in output
     assert output.index("yini-test-suite 0.3.0rc1") < output.index("PASS  ")
     assert output.index("YINI Test Suite Summary") < output.index(
@@ -454,7 +454,7 @@ def test_run_suite_matrix_summary_lists_failed_groups(
     assert 'Test suite: "all"' in output
     assert "YINI spec: 1.0.0-RC.6x" in output
     assert "Summary: 3 passed, 1 failed, 4 total" in output
-    assert "Result: FAIL" in output
+    assert "Result:  FAIL" in output
     assert "Failed groups:" in output
     assert "- golden / strict: 1 failed" in output
 
