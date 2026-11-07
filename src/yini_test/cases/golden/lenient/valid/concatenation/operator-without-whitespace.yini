@@ -1,0 +1,8 @@
+@yini
+
+^ Concat
+compact = "a"+42
+// `++42` is the operator followed by the signed number `+42`.
+plusSign = "a"++42
+minusSign = "a"+-42
+emptyStringStart = "" + 1 + 2 + 3

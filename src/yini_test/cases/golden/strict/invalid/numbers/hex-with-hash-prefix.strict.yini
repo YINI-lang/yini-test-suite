@@ -1,0 +1,8 @@
+@yini strict
+
+^ Numbers
+// `#` always begins a comment, so `#FF0033` is NOT a hexadecimal value.
+// `color` has no value, which is an error in strict mode.
+color = #FF0033
+
+/END

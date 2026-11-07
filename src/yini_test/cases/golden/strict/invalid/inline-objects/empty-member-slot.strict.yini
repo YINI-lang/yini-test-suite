@@ -1,0 +1,7 @@
+@yini strict
+
+^ Objects
+// INVALID: Empty object slots are never null.
+value = { a: 1,, b: 2 }
+
+/END

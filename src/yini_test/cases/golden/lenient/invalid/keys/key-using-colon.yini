@@ -1,3 +1,6 @@
 @yini
 
-key: value
+^ Keys
+// INVALID: `:` is not an assignment operator for section members; use `=`.
+// The value is quoted so that the colon is the only error in this case.
+key: "value"

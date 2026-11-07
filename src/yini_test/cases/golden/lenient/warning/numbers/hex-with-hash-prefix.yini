@@ -1,0 +1,6 @@
+@yini
+
+^ Numbers
+// `#` always begins a comment, so `#FF0033` is NOT a hexadecimal value.
+// `color` has no value: null with a warning in lenient mode.
+color = #FF0033

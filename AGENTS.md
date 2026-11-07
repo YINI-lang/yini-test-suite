@@ -32,6 +32,8 @@ This repository does **not** contain a YINI parser. It discovers YINI test cases
 |   `-- golden/                 # Broader fixed-output conformance cases.
 |-- tests/                      # Tests for the yini-test-suite runner itself.
 |-- docs/                       # Contracts and runner documentation.
+|   |-- testing-strategy.md     # Describes the testing strategy, coverage priorities, and quality principles.
+|
 |-- runner-configs/             # Runner configuration files, if present.
 |-- Taskfile.yml                # Common development and adapter-run commands.
 |-- pyproject.toml              # Build metadata and pytest configuration.

@@ -1,0 +1,5 @@
+@yini
+
+// INVALID: Numeric shorthand depth must not have a leading zero; use ^1.
+^01 Name
+value = 1

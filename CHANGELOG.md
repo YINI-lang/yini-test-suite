@@ -10,6 +10,9 @@
 - **Added:** Lenient and strict golden cases for lowercase, uppercase, and mixed-case Boolean and null spellings as distinct inline object key names.
 - **Added:** Lenient and strict golden cases for `//`, `#`, and `/* ... */` comments after spaced, compact, and numeric shorthand section headers, plus invalid cases for trailing `;` comments.
 - **Added:** Required warning checks for four lenient-mode cases with missing values interpreted as `null`.
+- **Changed:** Lenient misplaced-shebang and mixed-line-ending cases now live under `warning/` and require a warning. SHOULD-level warnings are required by this corpus; see `docs/case-contract.md`.
+- **Changed:** Renamed misleading cases, clarified `key-using-colon` so the colon is its only error, and removed duplicate cases.
+- **Added:** Golden cases for important RC.7 and edge behavior: `#` after `=`, line breaks inside block comments, `\xhh` and other escapes, CRLF in triple-quoted strings, backticked-identifier restrictions, the `>` marker, hexadecimal 64-bit limits, empty object slots, duplicate `/END`, reserved `@include`, curly-quote delimiters, and invalid UTF-8.
 
 ## 0.3.0rc1 - 2026 September
 - **Added:** Golden fixtures for CR and LF -only line endings in strict mode, and strict-mode rejection of token-splitting comments and raw control characters.

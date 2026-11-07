@@ -1,0 +1,8 @@
+{
+    "Config": {
+        "name": "alternate-marker-greater-than",
+        "Child": {
+            "enabled": true
+        }
+    }
+}

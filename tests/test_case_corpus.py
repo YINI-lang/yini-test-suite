@@ -7,7 +7,7 @@ import pytest
 @pytest.mark.parametrize(
     "case_path",
     [
-        "golden/lenient/valid/encoding/mixed-line-endings.yini",
+        "golden/lenient/warning/encoding/mixed-line-endings.yini",
         "golden/strict/invalid/encoding/mixed-line-endings.strict.yini",
     ],
 )

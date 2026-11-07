@@ -1,0 +1,5 @@
+@yini
+
+^ Strings
+// Characters produced by escapes are not normalized: \r\n stays CRLF.
+value = E"""a\r\nb"""

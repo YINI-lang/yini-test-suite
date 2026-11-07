@@ -174,6 +174,11 @@ Lenient-mode root-level or section-level members with no value after `=` become
 with matching JSON output and warning expectations. The current missing-value
 fixtures match the diagnostic phrase `empty value`.
 
+Some warnings are only SHOULD-level in the YINI specification, such as empty
+documents, misplaced shebang-like lines, and mixed line endings in lenient mode.
+This corpus deliberately requires those warnings too. Cases covering them also
+belong under `warning/`.
+
 ---
 
 ## Invalid case format

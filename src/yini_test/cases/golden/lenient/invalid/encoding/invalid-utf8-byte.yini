@@ -1,0 +1,5 @@
+@yini
+
+^ Encoding
+// INVALID: The value contains a Latin-1 byte (0xE9), not UTF-8.
+name = "café"

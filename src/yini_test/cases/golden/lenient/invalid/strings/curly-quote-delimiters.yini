@@ -1,0 +1,5 @@
+@yini
+
+^ Strings
+// INVALID: Curly quotes are ordinary text, not string delimiters.
+text = “hello”

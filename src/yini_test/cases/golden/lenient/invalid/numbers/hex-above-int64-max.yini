@@ -1,0 +1,5 @@
+@yini
+
+^ Numbers
+// INVALID: Above the signed 64-bit maximum.
+value = 0x8000000000000000

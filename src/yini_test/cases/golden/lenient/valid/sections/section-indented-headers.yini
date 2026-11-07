@@ -1,5 +1,7 @@
 @yini
 
+// Indentation of section headers is cosmetic; depth comes only from markers.
+
 ^ Root
 name = "section-marker-separators"
 
