@@ -1,3 +1,21 @@
 # Preserve the source bytes used to test mixed line endings.
 src/yini_test/cases/golden/lenient/warning/encoding/mixed-line-endings.yini -text whitespace=cr-at-eol
 src/yini_test/cases/golden/strict/invalid/encoding/mixed-line-endings.strict.yini -text whitespace=cr-at-eol
+
+# Preserve the source bytes of fixtures named after a single line-ending form.
+# Without this, Git may convert LF and CRLF on checkout (for example with
+# core.autocrlf), and the fixtures would no longer test what their names say.
+src/yini_test/cases/golden/lenient/valid/encoding/lf-line-endings.yini -text
+src/yini_test/cases/golden/strict/valid/encoding/lf-line-endings.strict.yini -text
+src/yini_test/cases/golden/lenient/valid/encoding/crlf-line-endings.yini -text whitespace=cr-at-eol
+src/yini_test/cases/golden/strict/valid/encoding/crlf-line-endings.strict.yini -text whitespace=cr-at-eol
+src/yini_test/cases/golden/lenient/valid/encoding/cr-line-endings.yini -text
+src/yini_test/cases/golden/strict/valid/encoding/cr-line-endings.strict.yini -text
+src/yini_test/cases/golden/lenient/valid/strings/command-string-crlf.yini -text whitespace=cr-at-eol
+src/yini_test/cases/golden/strict/valid/strings/command-string-crlf.strict.yini -text whitespace=cr-at-eol
+src/yini_test/cases/golden/lenient/valid/strings/raw-triple-quoted-crlf-source.yini -text whitespace=cr-at-eol
+src/yini_test/cases/golden/strict/valid/strings/raw-triple-quoted-crlf-source.strict.yini -text whitespace=cr-at-eol
+src/yini_test/cases/golden/lenient/valid/strings/raw-triple-quoted-cr-source.yini -text
+src/yini_test/cases/golden/strict/valid/strings/raw-triple-quoted-cr-source.strict.yini -text
+src/yini_test/cases/golden/lenient/valid/strings/escaped-triple-quoted-crlf-source.yini -text whitespace=cr-at-eol
+src/yini_test/cases/golden/strict/valid/strings/escaped-triple-quoted-crlf-source.strict.yini -text whitespace=cr-at-eol

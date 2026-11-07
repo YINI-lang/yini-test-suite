@@ -1,0 +1,8 @@
+@yini strict
+
+^ Syntax
+// INVALID: U+2028 LINE SEPARATOR is not a YINI line ending, so both
+// members below are on the same logical line.
+a = 1 b = 2
+
+/END

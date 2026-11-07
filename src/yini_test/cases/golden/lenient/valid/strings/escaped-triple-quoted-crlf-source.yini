@@ -1,0 +1,7 @@
+@yini
+
+^ Strings
+// This file uses CRLF line endings. Source line endings become LF before
+// escapes are interpreted, so only the escaped \t stays a tab.
+value = E"""a\tb
+c"""

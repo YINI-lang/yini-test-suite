@@ -1,0 +1,5 @@
+@yini
+
+^ Numbers
+// INVALID: No underscore next to the decimal point.
+value = 1_.5

@@ -1,0 +1,7 @@
+@yini strict
+
+^ Keys
+// INVALID: The backticked key below contains a raw TAB character.
+`a	b` = 1
+
+/END

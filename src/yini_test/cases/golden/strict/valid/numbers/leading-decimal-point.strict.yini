@@ -1,0 +1,8 @@
+@yini strict
+
+^ Numbers
+// A decimal fraction may omit the zero before the decimal point.
+half = .5
+negativeHalf = -.5
+
+/END

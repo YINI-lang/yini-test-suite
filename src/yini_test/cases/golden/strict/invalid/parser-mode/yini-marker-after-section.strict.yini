@@ -1,0 +1,8 @@
+^ App
+
+// INVALID: The marker must appear before any meaningful content.
+@yini strict
+
+name = "yini-marker-after-section"
+
+/END

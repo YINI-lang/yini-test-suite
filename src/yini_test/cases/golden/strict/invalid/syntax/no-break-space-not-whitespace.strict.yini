@@ -1,0 +1,8 @@
+@yini strict
+
+^ Syntax
+// INVALID: The character between `key` and `=` is U+00A0 NO-BREAK SPACE,
+// which is not syntactic whitespace in YINI.
+key = 1
+
+/END

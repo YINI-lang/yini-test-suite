@@ -1,0 +1,5 @@
+@yini
+
+^ Numbers
+// INVALID: A separator without any hexadecimal digits.
+value = hex:_

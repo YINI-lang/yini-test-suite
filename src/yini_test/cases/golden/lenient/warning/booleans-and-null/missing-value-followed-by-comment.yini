@@ -1,0 +1,6 @@
+@yini
+
+^ Values
+// Only a comment follows `=` on each line, so each member has no value.
+slashComment = // no value here
+blockComment = /* no value here */

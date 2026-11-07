@@ -1,0 +1,7 @@
+@yini strict
+
+^ Concat
+// INVALID: `+` is only string concatenation; YINI has no numeric addition.
+value = 1 + 2 + 3
+
+/END

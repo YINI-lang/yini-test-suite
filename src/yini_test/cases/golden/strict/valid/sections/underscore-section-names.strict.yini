@@ -1,0 +1,16 @@
+@yini strict
+
+// After the marker sequence, a leading `_` belongs to the section name.
+// Depth 1, name `_`.
+^_
+a = 1
+
+// Depth 2, name `_name`.
+^^_name
+b = 2
+
+// Marker sequence `^^_^` (depth 3), name `_name`.
+^^_^_name
+c = 3
+
+/END

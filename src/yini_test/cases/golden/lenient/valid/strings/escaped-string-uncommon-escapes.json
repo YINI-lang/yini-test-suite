@@ -1,0 +1,12 @@
+{
+    "Strings": {
+        "backtick": "a`b",
+        "slash": "a/b",
+        "question": "a?b",
+        "alert": "a\u0007b",
+        "verticalTab": "a\u000bb",
+        "backspace": "a\bb",
+        "formFeed": "a\fb",
+        "singleQuote": "a'b"
+    }
+}

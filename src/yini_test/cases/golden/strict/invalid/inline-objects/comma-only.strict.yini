@@ -1,0 +1,8 @@
+@yini strict
+
+^ Objects
+// INVALID: A comma with no member is not a trailing comma, so this is
+// not an empty object, even in lenient mode.
+value = { , }
+
+/END

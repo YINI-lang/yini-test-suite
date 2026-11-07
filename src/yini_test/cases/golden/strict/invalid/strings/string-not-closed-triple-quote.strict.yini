@@ -1,0 +1,7 @@
+@yini strict
+
+^ Strings
+// INVALID: The triple-quoted string is never closed.
+message = """never closed
+
+/END
