@@ -139,14 +139,14 @@ is wrong.
 A run starts with the runner name and version:
 
 ```text
-yini-test-suite 0.3.0rc1
+yini-test-suite 0.3.0rc2
 ```
 
 Each case is reported as `PASS` or `FAIL`, followed by a final summary:
 
 ```text
 YINI Test Suite Summary
-yini-test-suite: 0.3.0rc1
+yini-test-suite: 0.3.0rc2
 Adapter: yini-parser-typescript
 Parser version: 1.6.1
 YINI spec: 1.0.0-RC.6x

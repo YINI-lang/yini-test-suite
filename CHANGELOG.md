@@ -2,7 +2,7 @@
 
 **Changelog** for `yini-test-suite`.
 
-## Upcomming
+## 0.3.0rc2 - 2026 November
 - **Fixed:** Updated case expectations for the RC.6x / RC.7 WIP specification: duplicate sections and mode-declaration mismatches now require parsing to fail.
 - **Fixed:** Corrected nine JSON expectations to use LF for source line endings in multiline string values.
 - **Fixed:** Restored mixed line endings in two fixtures and added Git attributes and regression tests to preserve their source bytes.
