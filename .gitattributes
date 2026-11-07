@@ -1,0 +1,3 @@
+# Preserve the source bytes used to test mixed line endings.
+src/yini_test/cases/golden/lenient/valid/encoding/mixed-line-endings.yini -text whitespace=cr-at-eol
+src/yini_test/cases/golden/strict/invalid/encoding/mixed-line-endings.strict.yini -text whitespace=cr-at-eol

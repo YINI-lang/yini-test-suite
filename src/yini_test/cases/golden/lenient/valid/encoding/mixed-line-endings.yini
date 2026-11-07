@@ -1,5 +1,4 @@
 @yini
 
-^ Encoding
-name = "mixed-line-endings"
+^ Encodingname = "mixed-line-endings"
 valid = true

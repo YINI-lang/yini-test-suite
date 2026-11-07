@@ -1,5 +1,4 @@
 @yini strict
 
-^ Encoding
-value = true
+^ Encodingvalue = true
 /END
