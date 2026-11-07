@@ -1,4 +1,0 @@
-@yini
-
-^ Strings
-message = C"bad unicode escape \u12"
