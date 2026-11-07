@@ -1,0 +1,6 @@
+@yini strict
+
+^ Numbers
+value = 1e-400
+
+/END

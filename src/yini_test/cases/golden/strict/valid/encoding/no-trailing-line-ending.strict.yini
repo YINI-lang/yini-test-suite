@@ -1,0 +1,6 @@
+@yini strict
+
+^ Encoding
+value = true
+
+/END

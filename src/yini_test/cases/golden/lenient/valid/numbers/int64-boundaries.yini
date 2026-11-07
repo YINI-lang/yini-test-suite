@@ -1,0 +1,6 @@
+@yini
+
+^ Numbers
+minimum = -9223372036854775808
+maximum = 9223372036854775807
+aboveJsSafe = 9007199254740993

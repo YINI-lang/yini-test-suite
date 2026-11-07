@@ -1,0 +1,6 @@
+@yini strict
+
+^ Strings
+value = E"bad\z"
+
+/END

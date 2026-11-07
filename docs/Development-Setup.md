@@ -283,7 +283,7 @@ YINI Test Suite Summary
 yini-test-suite: 0.3.0rc1
 Adapter: yini-parser-typescript
 Parser version: 1.6.1
-YINI spec: 1.0.0 RC 6
+YINI spec: 1.0.0-RC.6x
 Test suite: "all"
 ```
 

@@ -1,0 +1,6 @@
+@yini
+
+^ Parent
+item = 1
+^^ item
+value = 2

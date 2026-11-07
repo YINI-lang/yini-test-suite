@@ -268,7 +268,7 @@ def print_summary(
         f"Summary: {total_passed} passed, {total_failed} failed, "
         f"{total} total, duration {format_duration(duration)}"
     )
-    print(f"Result: {'PASS' if total_failed == 0 else 'FAIL'}")
+    print(f"Result:  {'PASS' if total_failed == 0 else 'FAIL'}")
 
     failed_groups = [
         group_summary for group_summary in group_summaries if group_summary.failed > 0

@@ -1,7 +1,7 @@
 {
     "Strings": {
         "quoted": "@yini /END // # /* --",
-        "triple": "@yini\n/END // # /* --",
+        "triple": "@yini\r\n/END // # /* --",
         "raw": "@yini /END // # /* --"
     }
 }

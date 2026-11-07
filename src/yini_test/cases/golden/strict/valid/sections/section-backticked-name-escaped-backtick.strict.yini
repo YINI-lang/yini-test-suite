@@ -1,0 +1,6 @@
+@yini strict
+
+^ `a\`b`
+value = true
+
+/END

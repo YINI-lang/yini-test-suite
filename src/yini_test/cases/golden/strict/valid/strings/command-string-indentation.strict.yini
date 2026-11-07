@@ -1,0 +1,10 @@
+@yini strict
+
+^ Strings
+build = command"""
+    npm install
+      npm run build
+    npm test
+"""
+
+/END

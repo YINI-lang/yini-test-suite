@@ -1,0 +1,10 @@
+{
+    "Concat": {
+        "hexadecimal": "n: 255",
+        "hexPrefix": "n: 255",
+        "binary": "n: 10",
+        "binaryPercent": "n: 10",
+        "octal": "n: 8",
+        "duodecimal": "n: 10"
+    }
+}

@@ -1,0 +1,5 @@
+@yini
+
+^ Strings
+script = command""" first
+"""

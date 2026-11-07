@@ -1,5 +1,5 @@
 {
   "Strings": {
-    "message": "Line one\nLine two with \\n kept raw\nLine three"
+    "message": "Line one\r\nLine two with \\n kept raw\r\nLine three"
   }
 }

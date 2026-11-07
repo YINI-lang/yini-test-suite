@@ -1,0 +1,6 @@
+@yini strict
+
+^ Numbers
+value = 01e3
+
+/END

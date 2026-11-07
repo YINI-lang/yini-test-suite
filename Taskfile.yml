@@ -100,6 +100,7 @@ tasks:
     env:
       PYTHONPATH: src
     cmds:
+      - npm --prefix ../yini-parser-typescript run build-tools
       - python -m yini_test smoke --cases-root {{.PATH_CASES}} --adapter node ../yini-parser-typescript/dist-tools/tools/yini-test-adapter.js --input {input} --mode {mode}
 
   run-smoke-typescript-strict:
@@ -107,6 +108,7 @@ tasks:
     env:
       PYTHONPATH: src
     cmds:
+      - npm --prefix ../yini-parser-typescript run build-tools
       - python -m yini_test smoke --strict --cases-root {{.PATH_CASES}} --adapter node ../yini-parser-typescript/dist-tools/tools/yini-test-adapter.js --input {input} --mode {mode}
 
   run-all-typescript:
@@ -114,6 +116,7 @@ tasks:
     env:
       PYTHONPATH: src
     cmds:
+      - npm --prefix ../yini-parser-typescript run build-tools
       - python -m yini_test all --all-modes --cases-root {{.PATH_CASES}} --adapter node ../yini-parser-typescript/dist-tools/tools/yini-test-adapter.js --input {input} --mode {mode}
 
   # ---------------------------------------------------------------------------
