@@ -1,0 +1,12 @@
+@yini
+
+^ Strings
+// \xhh denotes the code point U+00hh (never a raw byte).
+shortHex = E"\x41\x7e"
+shortHexLatin1 = E"\xE9"
+bmp = E"\u00e9\u20AC"
+astral = E"\U0001F600"
+// \oOOO is an octal escape with up to three digits (max \o377).
+octal = E"\o101\o377"
+nulOctal = E"a\o0b"
+nul = E"a\0b"

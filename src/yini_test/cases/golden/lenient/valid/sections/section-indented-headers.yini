@@ -1,0 +1,18 @@
+@yini
+
+// Indentation of section headers is cosmetic; depth comes only from markers.
+
+^ Root
+name = "section-marker-separators"
+
+    ^^ ChildWithIndent
+    value = "indented child"
+
+^^ ChildWithoutIndent
+value = "unindented child"
+
+^^^ GrandChild
+value = "grandchild after compact marker"
+
+^ SecondRoot
+name = "sibling top-level section"

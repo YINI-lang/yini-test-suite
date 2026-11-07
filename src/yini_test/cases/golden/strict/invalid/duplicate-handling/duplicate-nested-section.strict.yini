@@ -1,0 +1,11 @@
+@yini strict
+
+^ Root
+^^ Child
+a = 1
+
+// INVALID: Duplicate section name under the same parent.
+^^ Child
+b = 2
+
+/END

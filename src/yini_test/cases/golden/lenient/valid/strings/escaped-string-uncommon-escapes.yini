@@ -1,0 +1,11 @@
+@yini
+
+^ Strings
+backtick = E"a\`b"
+slash = E"a\/b"
+question = E"a\?b"
+alert = E"a\ab"
+verticalTab = E"a\vb"
+backspace = E"a\bb"
+formFeed = E"a\fb"
+singleQuote = E'a\'b'

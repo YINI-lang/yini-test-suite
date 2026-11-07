@@ -1,0 +1,7 @@
+@yini
+
+// INVALID: `@include` is reserved for future use.
+@include "base.yini"
+
+^ App
+value = true

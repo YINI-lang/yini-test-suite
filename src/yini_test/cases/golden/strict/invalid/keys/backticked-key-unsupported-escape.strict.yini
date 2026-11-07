@@ -1,0 +1,7 @@
+@yini strict
+
+^ Keys
+// INVALID: Only \` and \\ are escapes in backticked identifiers.
+`a\nb` = 1
+
+/END

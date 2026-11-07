@@ -1,0 +1,7 @@
+@yini strict
+
+^ Numbers
+// INVALID: No whitespace is allowed after `hex:`.
+value = hex: FF
+
+/END

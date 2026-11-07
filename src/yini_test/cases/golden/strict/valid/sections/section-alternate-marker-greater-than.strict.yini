@@ -1,0 +1,9 @@
+@yini strict
+
+> Config
+name = "alternate-marker-greater-than"
+
+>> Child
+enabled = true
+
+/END

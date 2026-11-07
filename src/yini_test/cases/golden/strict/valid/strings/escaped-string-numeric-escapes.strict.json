@@ -1,0 +1,11 @@
+{
+    "Strings": {
+        "shortHex": "A~",
+        "shortHexLatin1": "é",
+        "bmp": "é€",
+        "astral": "😀",
+        "octal": "Aÿ",
+        "nulOctal": "a\u0000b",
+        "nul": "a\u0000b"
+    }
+}

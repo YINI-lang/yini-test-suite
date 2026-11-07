@@ -1,0 +1,10 @@
+@yini
+
+^ Document
+name = "lenient-content-after-end-marker"
+
+/END
+
+// INVALID: Only whitespace and comments may follow /END, in both modes.
+^ Extra
+name = "not allowed after terminator"

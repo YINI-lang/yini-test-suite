@@ -1,0 +1,6 @@
+ #!/usr/bin/env yini
+// The first line starts with a space, so `#!` is not a shebang. It is a `#`
+// comment and SHOULD produce a warning in lenient mode.
+
+^ App
+value = true

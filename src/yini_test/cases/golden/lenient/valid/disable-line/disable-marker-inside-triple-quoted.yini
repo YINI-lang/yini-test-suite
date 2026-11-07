@@ -1,0 +1,7 @@
+@yini
+
+^ Strings
+// Inside a triple-quoted string, `--` is string content, not a disabled line.
+text = """
+--This line is part of the string.
+"""

@@ -1,0 +1,8 @@
+{
+    "Concat": {
+        "compact": "a42",
+        "plusSign": "a42",
+        "minusSign": "a-42",
+        "emptyStringStart": "123"
+    }
+}

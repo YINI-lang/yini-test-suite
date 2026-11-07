@@ -169,6 +169,16 @@ Example:
 
 Each `contains` value must appear somewhere in the adapter's `stderr`.
 
+Lenient-mode root-level or section-level members with no value after `=` become
+`null` and require a warning. Cases covering this behavior belong under `warning/`,
+with matching JSON output and warning expectations. The current missing-value
+fixtures match the diagnostic phrase `empty value`.
+
+Some warnings are only SHOULD-level in the YINI specification, such as empty
+documents, misplaced shebang-like lines, and mixed line endings in lenient mode.
+This corpus deliberately requires those warnings too. Cases covering them also
+belong under `warning/`.
+
 ---
 
 ## Invalid case format
@@ -205,6 +215,15 @@ Expected `.json` files must contain valid, machine-readable JSON and represent t
 For valid cases, `yini-test-suite` compares the parsed JSON values, not raw text formatting. Differences in whitespace or indentation do not matter; the data structure itself must match. Boolean values and numbers are distinct, so `true` does not match `1`.
 
 Expected `.json` SHOULD still be pretty-formatted (using 4-space indentation) so it's nicer for humans to read during debugging and development.
+
+Source line endings in multiline string values become LF (`\n`) in both modes,
+including Raw and Escaped Triple-Quoted Strings and Command Strings. Expected JSON
+must reflect this normalization. Characters produced by escape sequences, such as
+`E"\r\n"`, retain their values.
+
+The mixed-line-ending fixtures deliberately contain different source line-ending
+forms. Their `.gitattributes` entries disable Git text normalization. Preserve
+their bytes when editing them; the corpus tests check that they remain mixed.
 
 ---
 

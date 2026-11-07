@@ -1,0 +1,6 @@
+@yini
+
+^ Keys
+// `name` and name are the same identifier, so the second member is a duplicate.
+name = "first"
+`name` = "second"

@@ -1,7 +1,0 @@
-{
-  "App": {
-    "name": "yini-lenient-in-strict-mode",
-    "mode": "strict",
-    "enabled": true
-  }
-}

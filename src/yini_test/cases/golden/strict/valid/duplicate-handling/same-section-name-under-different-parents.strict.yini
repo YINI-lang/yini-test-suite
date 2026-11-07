@@ -1,0 +1,12 @@
+@yini strict
+
+^ Root
+^^ Child
+x = 1
+
+^^ Other
+// Same name as `Root.Child`, but under a different parent: allowed.
+^^^ Child
+y = 2
+
+/END

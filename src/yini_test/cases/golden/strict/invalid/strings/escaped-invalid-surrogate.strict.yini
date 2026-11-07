@@ -1,0 +1,8 @@
+@yini strict
+
+^ Strings
+// INVALID: Surrogate code points (U+D800..U+DFFF) are not Unicode scalar
+// values, so they cannot be produced by an escape.
+value = E"\uD800"
+
+/END

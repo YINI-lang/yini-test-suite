@@ -1,0 +1,6 @@
+@yini
+
+^ Strings
+// This file uses CRLF line endings; the value must contain LF only.
+value = """first
+second"""

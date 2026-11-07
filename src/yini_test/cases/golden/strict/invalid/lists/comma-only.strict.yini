@@ -1,0 +1,8 @@
+@yini strict
+
+^ Lists
+// INVALID: A comma with no element is not a trailing comma, so this is
+// not an empty list, even in lenient mode.
+value = [,]
+
+/END

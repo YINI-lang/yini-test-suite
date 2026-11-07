@@ -1,0 +1,7 @@
+@yini strict
+
+^ Numbers
+// INVALID: A decimal point must be followed by a digit.
+val = 3.
+
+/END

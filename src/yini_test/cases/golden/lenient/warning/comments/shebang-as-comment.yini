@@ -1,0 +1,8 @@
+@yini
+#!/usr/bin/env yini
+// The `#!` line above is not on the first line, so it is not a shebang.
+// It is treated as a `#` comment and SHOULD produce a warning in lenient mode.
+
+^ Application
+name = "lenient-shebang-as-comment"
+enabled = true

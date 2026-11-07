@@ -1,0 +1,5 @@
+@yini
+
+^ Numbers
+// INVALID: `2` is not a binary digit.
+value = 0b102

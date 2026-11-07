@@ -1,0 +1,7 @@
+@yini strict
+
+^ Values
+// INVALID: Only a block comment follows `=`, so the member has no value.
+key = /* no value here */
+
+/END

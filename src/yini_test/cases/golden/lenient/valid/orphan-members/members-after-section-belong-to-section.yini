@@ -1,0 +1,13 @@
+@yini
+
+// YINI has no syntax for returning to the document root after a section
+// header. All members below `^ Application`, including those after the blank
+// line, belong to `Application`. Only members before the first section header
+// are orphan (root-level) members.
+
+^ Application
+version = "1.0.0"
+status = "ready"
+
+name = "lenient-root-after-section"
+enabled = true

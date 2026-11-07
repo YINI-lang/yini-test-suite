@@ -1,0 +1,8 @@
+@yini strict
+#!/usr/bin/env yini
+// INVALID: `#!` is not on the first line, which is an error in strict mode.
+
+^ App
+value = true
+
+/END

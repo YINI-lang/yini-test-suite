@@ -1,0 +1,5 @@
+@yini
+
+^ Objects
+// INVALID: Empty object slots are never null.
+value = { a: }

@@ -1,0 +1,8 @@
+@yini strict
+
+^ Keys
+// INVALID: A backticked identifier must be on a single logical line.
+`first
+second` = 1
+
+/END

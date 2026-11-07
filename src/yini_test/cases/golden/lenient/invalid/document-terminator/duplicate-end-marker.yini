@@ -1,0 +1,9 @@
+@yini
+
+^ Document
+value = 1
+
+/END
+
+// INVALID: Only one terminator is permitted per document.
+/END

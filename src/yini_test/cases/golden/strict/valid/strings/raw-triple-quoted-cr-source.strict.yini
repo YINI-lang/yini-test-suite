@@ -1,0 +1,1 @@
+@yini strict^ Strings// This file uses CR line endings; the value must contain LF only.value = """firstsecond"""/END

@@ -1,0 +1,7 @@
+@yini strict
+
+^ Numbers
+// INVALID: An underscore must not split a base prefix.
+value = 0_b1101
+
+/END

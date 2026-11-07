@@ -1,0 +1,5 @@
+@yini
+
+^ Numbers
+// INVALID: No underscore next to the exponent marker.
+value = 1e_10

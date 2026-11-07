@@ -1,0 +1,7 @@
+@yini strict
+
+^ Strings
+// INVALID: C-style octal escapes are not YINI escapes; use \o123 instead.
+value = E"\123"
+
+/END

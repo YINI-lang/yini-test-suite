@@ -1,0 +1,9 @@
+@yini strict
+
+^ Lists
+// The line ending inside the block comment ends the logical line, so `x` has
+// no value and `[1]` on the next line is an invalid standalone statement.
+x = /*
+*/ [1]
+
+/END

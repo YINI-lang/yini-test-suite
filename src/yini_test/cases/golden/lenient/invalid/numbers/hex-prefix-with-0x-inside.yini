@@ -1,0 +1,5 @@
+@yini
+
+^ Numbers
+// INVALID: `0x` is not allowed inside the `hex:` form.
+value = hex:0xFF

@@ -1,5 +1,5 @@
 {
     "Strings": {
-        "message": "Line one\r\n    Line two is indented\r\n    Line three is indented"
+        "message": "Line one\n    Line two is indented\n    Line three is indented"
     }
 }

@@ -1,0 +1,5 @@
+@yini
+
+^ Strings
+// INVALID: \x requires exactly two hexadecimal digits.
+value = E"\x4"

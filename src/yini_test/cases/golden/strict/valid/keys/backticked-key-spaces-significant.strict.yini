@@ -1,0 +1,9 @@
+@yini strict
+
+^ Keys
+// Spaces inside backticks are part of the identifier: three distinct keys.
+`name` = 1
+` name` = 2
+`name ` = 3
+
+/END

@@ -1,8 +1,0 @@
-@yini strict
-
-^ Application
---name = "disabled"
-name = "strict-disable-line-basic"
-enabled = true
-
-/END
