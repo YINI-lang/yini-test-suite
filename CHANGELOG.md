@@ -3,9 +3,13 @@
 **Changelog** for `yini-test-suite`.
 
 ## Upcomming
+- **Fixed:** Updated case expectations for the RC.6x / RC.7 WIP specification: duplicate sections and mode-declaration mismatches now require parsing to fail.
+- **Fixed:** Corrected nine JSON expectations to use LF for source line endings in multiline string values.
+- **Fixed:** Restored mixed line endings in two fixtures and added Git attributes and regression tests to preserve their source bytes.
 - **Added:** Golden cases for backslash escapes in **backticked keys and section names** (`\\` -> `\`) in lenient and strict modes.
 - **Added:** Lenient and strict golden cases for lowercase, uppercase, and mixed-case Boolean and null spellings as distinct inline object key names.
 - **Added:** Lenient and strict golden cases for `//`, `#`, and `/* ... */` comments after spaced, compact, and numeric shorthand section headers, plus invalid cases for trailing `;` comments.
+- **Added:** Required warning checks for four lenient-mode cases with missing values interpreted as `null`.
 
 ## 0.3.0rc1 - 2026 September
 - **Added:** Golden fixtures for CR and LF -only line endings in strict mode, and strict-mode rejection of token-splitting comments and raw control characters.
