@@ -8,6 +8,7 @@ version: '3'
 
 vars:
   PATH_CASES: src/yini_test/cases
+  PATH_GO_ADAPTER: '{{.ROOT_DIR}}/build/yini-test-adapter-go{{if eq OS "windows"}}.exe{{end}}'
 
 tasks:
   default:
@@ -148,6 +149,42 @@ tasks:
       - python -m yini_test all --all-modes --cases-root {{.PATH_CASES}} --adapter python ../yini-parser-python/tools/yini_parser_adapter.py --input {input} --mode {mode}
 
   # ---------------------------------------------------------------------------
+  # Run yini-test-suite cases against yini-parser-go.
+  # ---------------------------------------------------------------------------
+
+  build-go-adapter:
+    desc: Build the yini-parser-go adapter into this repository's build directory
+    cmds:
+      - go -C ../yini-parser-go build -o "{{.PATH_GO_ADAPTER}}" ./cmd/yini-test-adapter
+
+  run-smoke-go-lenient:
+    desc: Run lenient smoke cases against yini-parser-go
+    env:
+      PYTHONPATH: src
+      PYTHONIOENCODING: utf-8
+    cmds:
+      - task: build-go-adapter
+      - python -m yini_test smoke --cases-root {{.PATH_CASES}} --adapter "{{.PATH_GO_ADAPTER}}" --input {input} --mode {mode}
+
+  run-smoke-go-strict:
+    desc: Run strict smoke cases against yini-parser-go
+    env:
+      PYTHONPATH: src
+      PYTHONIOENCODING: utf-8
+    cmds:
+      - task: build-go-adapter
+      - python -m yini_test smoke --strict --cases-root {{.PATH_CASES}} --adapter "{{.PATH_GO_ADAPTER}}" --input {input} --mode {mode}
+
+  run-all-go:
+    desc: Run smoke and golden cases in lenient and strict mode against yini-parser-go
+    env:
+      PYTHONPATH: src
+      PYTHONIOENCODING: utf-8
+    cmds:
+      - task: build-go-adapter
+      - python -m yini_test all --all-modes --cases-root {{.PATH_CASES}} --adapter "{{.PATH_GO_ADAPTER}}" --input {input} --mode {mode}
+
+  # ---------------------------------------------------------------------------
   # Convenience aliases.
   # ---------------------------------------------------------------------------
 
@@ -169,12 +206,15 @@ tasks:
       - task run-smoke-typescript-strict
       - task run-smoke-python-lenient
       - task run-smoke-python-strict
+      - task run-smoke-go-lenient
+      - task run-smoke-go-strict
 
   adapters-all:
     desc: Run all available cases against all configured parser adapters
     cmds:
       - task run-all-typescript
       - task run-all-python
+      - task run-all-go
 
   # ---------------------------------------------------------------------------
   # Cleanup.

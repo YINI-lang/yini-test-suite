@@ -23,6 +23,8 @@ Optional:
   TypeScript parser adapter.
 - A sibling `yini-parser-python` repository if you want to run the Python parser
   adapter.
+- Go 1.22 or newer and a sibling `yini-parser-go` repository if you want to run
+  the Go parser adapter.
 
 ## Install Task
 
@@ -200,6 +202,7 @@ YINI-lang-WORK/
   yini-test-suite/
   yini-parser-typescript/
   yini-parser-python/
+  yini-parser-go/
 ```
 
 Run TypeScript parser cases:
@@ -217,6 +220,19 @@ task run-smoke-python-lenient
 task run-smoke-python-strict
 task run-all-python
 ```
+
+Run Go parser cases:
+
+```bash
+task run-smoke-go-lenient
+task run-smoke-go-strict
+task run-all-go
+```
+
+Each Go task builds the adapter from `../yini-parser-go/cmd/yini-test-adapter/`
+into this repository's `build/` directory before running cases. The executable
+is named `yini-test-adapter-go.exe` on Windows and `yini-test-adapter-go` on
+other platforms. Run `task build-go-adapter` to build it separately.
 
 Run all configured adapters:
 

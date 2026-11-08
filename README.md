@@ -97,8 +97,9 @@ Parser-specific adapter scripts are maintained in their parser repositories, not
 in this runner package.
 
 This repository documents source-checkout commands and provides Taskfile tasks
-for [`yini-parser-typescript`](https://github.com/YINI-lang/yini-parser-typescript)
-and [`yini-parser-python`](https://github.com/YINI-lang/yini-parser-python).
+for [`yini-parser-typescript`](https://github.com/YINI-lang/yini-parser-typescript),
+[`yini-parser-python`](https://github.com/YINI-lang/yini-parser-python),
+and [`yini-parser-go`](https://github.com/YINI-lang/yini-parser-go).
 Those examples require the corresponding sibling repository and its adapter;
 they are not included in an installed `yini-test-suite` package.
 
@@ -109,6 +110,7 @@ YINI-lang-WORK/
   yini-test-suite/
   yini-parser-typescript/
   yini-parser-python/
+  yini-parser-go/
 ```
 
 Example TypeScript adapter command:
@@ -128,7 +130,11 @@ When working from the source repository, the matching Taskfile commands are:
 ```bash
 task run-all-typescript
 task run-all-python
+task run-all-go
 ```
+
+The Go tasks require Go 1.22 or newer and build the adapter into this
+repository's `build/` directory before running cases.
 
 If these runs expose parser or adapter problems, fix those issues in the
 corresponding parser repository unless the shared case corpus or runner contract
