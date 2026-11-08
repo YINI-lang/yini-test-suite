@@ -3,6 +3,8 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+import subprocess
+import sys
 
 import pytest
 
@@ -27,6 +29,7 @@ from yini_test.runner import (
     format_summary_rule,
     get_yini_spec_revision,
     run_case_group,
+    run_invalid_case,
     run_valid_case,
     run_warning_case,
     run_suite,
@@ -764,3 +767,293 @@ def test_get_yini_spec_revision_reads_packaged_case_manifest() -> None:
 
     # Assert.
     assert revision == "1.0.0-RC.6x"
+
+
+@pytest.mark.parametrize(
+    ("returncode", "stderr", "passed"),
+    [
+        pytest.param(1, "Invalid syntax.", True, id="rejected-input"),
+        pytest.param(0, "", False, id="unexpected-success"),
+        pytest.param(0, "Invalid syntax.", False, id="error-text-with-success-exit"),
+    ],
+)
+def test_run_invalid_case_checks_exit_status(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+    returncode: int,
+    stderr: str,
+    passed: bool,
+) -> None:
+    # Arrange.
+    case = InvalidCase(yini_path=tmp_path / "invalid.yini")
+    monkeypatch.setattr(
+        "yini_test.runner.run_adapter_raw",
+        lambda adapter_tokens, input_path, mode: AdapterResult(
+            stdout="{}", stderr=stderr, returncode=returncode
+        ),
+    )
+
+    # Act.
+    result = run_invalid_case(case, adapter_tokens=[sys.executable], mode="strict")
+
+    # Assert.
+    assert result.case_path == case.yini_path
+    assert result.passed is passed
+    if not passed:
+        assert "Invalid case was expected to fail, but succeeded" in result.message
+        assert "stdout:\n{}" in result.message
+        if stderr:
+            assert f"stderr:\n{stderr}" in result.message
+
+
+@pytest.fixture
+def warning_case(tmp_path: Path) -> WarningCase:
+    case = WarningCase(
+        yini_path=tmp_path / "warning.yini",
+        json_path=tmp_path / "warning.json",
+        warning_path=tmp_path / "warning.warning.json",
+    )
+    case.json_path.write_text('{"name": "Demo"}', encoding="utf-8")
+    case.warning_path.write_text(
+        '[{"contains": "FIRST_WARNING"}, {"contains": "SECOND_WARNING"}]',
+        encoding="utf-8",
+    )
+    return case
+
+
+@pytest.mark.parametrize("case_kind", ["valid", "warning", "invalid"])
+def test_adapter_timeout_fails_each_case_category(
+    monkeypatch: pytest.MonkeyPatch,
+    warning_case: WarningCase,
+    case_kind: str,
+) -> None:
+    # Arrange.
+    def time_out(
+        command: list[str], *, timeout: float, **kwargs: object
+    ) -> subprocess.CompletedProcess[str]:
+        raise subprocess.TimeoutExpired(command, timeout)
+
+    monkeypatch.setattr("yini_test.adapters.subprocess.run", time_out)
+    adapter_tokens = [sys.executable, "--input", "{input}", "--mode", "{mode}"]
+
+    # Act.
+    if case_kind == "valid":
+        result = run_valid_case(
+            ValidCase(warning_case.yini_path, warning_case.json_path),
+            adapter_tokens,
+            mode="strict",
+        )
+    elif case_kind == "warning":
+        result = run_warning_case(warning_case, adapter_tokens, mode="strict")
+    else:
+        result = run_invalid_case(
+            InvalidCase(warning_case.yini_path), adapter_tokens, mode="strict"
+        )
+
+    # Assert.
+    assert result.passed is False
+    assert result.case_path == warning_case.yini_path
+    assert (
+        f"Adapter timed out for case: {warning_case.yini_path.name}" in result.message
+    )
+    assert f"--input {warning_case.yini_path} --mode strict" in result.message
+
+
+@pytest.mark.parametrize(
+    ("stdout", "stderr", "returncode", "error"),
+    [
+        pytest.param(
+            '{"name": "Demo"}',
+            "Extra diagnostic.\nSECOND_WARNING\nFIRST_WARNING",
+            0,
+            None,
+            id="all-markers-in-stderr",
+        ),
+        pytest.param(
+            '{"name": "Demo"}', "SECOND_WARNING", 0, "FIRST_WARNING", id="missing-first"
+        ),
+        pytest.param(
+            '{"name": "Demo"}',
+            "FIRST_WARNING",
+            0,
+            "SECOND_WARNING",
+            id="missing-second",
+        ),
+        pytest.param(
+            ' { "name": "Demo" } \n',
+            "FIRST_WARNING\nSECOND_WARNING",
+            2,
+            "Adapter failed for warning case",
+            id="nonzero-exit-with-correct-output",
+        ),
+        pytest.param(
+            "", "FIRST_WARNING\nSECOND_WARNING", 0, "no JSON output", id="empty-stdout"
+        ),
+        pytest.param(
+            '{"name":',
+            "FIRST_WARNING\nSECOND_WARNING",
+            0,
+            "not valid JSON",
+            id="malformed-json",
+        ),
+    ],
+)
+def test_run_warning_case_requires_success_json_and_all_warning_markers(
+    monkeypatch: pytest.MonkeyPatch,
+    warning_case: WarningCase,
+    stdout: str,
+    stderr: str,
+    returncode: int,
+    error: str | None,
+) -> None:
+    # Arrange.
+    monkeypatch.setattr(
+        "yini_test.runner.run_adapter_raw",
+        lambda adapter_tokens, input_path, mode: AdapterResult(
+            stdout=stdout, stderr=stderr, returncode=returncode
+        ),
+    )
+
+    # Act.
+    result = run_warning_case(warning_case, [sys.executable], mode="lenient")
+
+    # Assert.
+    assert result.case_path == warning_case.yini_path
+    assert result.passed is (error is None)
+    if error is not None:
+        assert error in result.message
+
+
+def test_run_warning_case_does_not_match_markers_in_stdout(
+    monkeypatch: pytest.MonkeyPatch,
+    warning_case: WarningCase,
+) -> None:
+    # Arrange.
+    stdout = '{"name": "FIRST_WARNING SECOND_WARNING"}'
+    warning_case.json_path.write_text(stdout, encoding="utf-8")
+    monkeypatch.setattr(
+        "yini_test.runner.run_adapter_raw",
+        lambda adapter_tokens, input_path, mode: AdapterResult(
+            stdout=stdout, stderr="", returncode=0
+        ),
+    )
+
+    # Act.
+    result = run_warning_case(warning_case, [sys.executable], mode="lenient")
+
+    # Assert.
+    assert result.passed is False
+    assert "Warning mismatch for warning case" in result.message
+    assert "FIRST_WARNING" in result.message
+
+
+@pytest.mark.parametrize("failing_category", ["valid", "warning", "invalid"])
+@pytest.mark.parametrize("fail_fast", [True, False], ids=["stop", "continue"])
+def test_run_case_group_stops_only_when_fail_fast_is_enabled(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+    failing_category: str,
+    fail_fast: bool,
+) -> None:
+    # Arrange.
+    case_paths: list[Path] = []
+    for category in ("valid", "warning", "invalid"):
+        category_dir = tmp_path / "smoke" / "lenient" / category
+        category_dir.mkdir(parents=True)
+        for name in ("1-first", "2-second"):
+            yini_path = category_dir / f"{name}.yini"
+            yini_path.write_text("name = 1", encoding="utf-8")
+            if category != "invalid":
+                yini_path.with_suffix(".json").write_text("{}", encoding="utf-8")
+            if category == "warning":
+                yini_path.with_suffix(".warning.json").write_text(
+                    '[{"contains": "warning"}]', encoding="utf-8"
+                )
+            case_paths.append(yini_path)
+
+    failing_path = tmp_path / "smoke" / "lenient" / failing_category / "1-first.yini"
+    calls: list[Path] = []
+
+    def fake_run_case(
+        case: ValidCase | WarningCase | InvalidCase,
+        adapter_tokens: list[str],
+        mode: str,
+        show_progress: bool = False,
+    ) -> CaseResult:
+        calls.append(case.yini_path)
+        return CaseResult(
+            case_path=case.yini_path, passed=case.yini_path != failing_path
+        )
+
+    monkeypatch.setattr("yini_test.runner.run_valid_case", fake_run_case)
+    monkeypatch.setattr("yini_test.runner.run_warning_case", fake_run_case)
+    monkeypatch.setattr("yini_test.runner.run_invalid_case", fake_run_case)
+
+    # Act.
+    results = run_case_group(
+        "smoke", "lenient", tmp_path, [sys.executable], fail_fast=fail_fast
+    )
+
+    # Assert.
+    expected_paths = case_paths
+    if fail_fast:
+        expected_paths = case_paths[: case_paths.index(failing_path) + 1]
+    assert calls == expected_paths
+    assert [result.case_path for result in results] == expected_paths
+    assert sum(not result.passed for result in results) == 1
+
+
+@pytest.mark.parametrize("fail_fast", [True, False], ids=["stop", "continue"])
+def test_run_suite_matrix_fail_fast_counts_only_executed_cases(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+    capsys: pytest.CaptureFixture[str],
+    fail_fast: bool,
+) -> None:
+    # Arrange.
+    calls: list[tuple[str, str]] = []
+    fail_fast_values: list[bool] = []
+
+    def fake_run_case_group(
+        suite_name: str,
+        mode: str,
+        cases_root: Path,
+        adapter_tokens: list[str],
+        fail_fast: bool = False,
+        show_progress: bool = False,
+    ) -> list[CaseResult]:
+        calls.append((suite_name, mode))
+        fail_fast_values.append(fail_fast)
+        results = [CaseResult(tmp_path / f"{suite_name}-{mode}-pass.yini", passed=True)]
+        if (suite_name, mode) == ("smoke", "strict"):
+            results.append(CaseResult(tmp_path / "failure.yini", passed=False))
+        return results
+
+    monkeypatch.setattr("yini_test.runner.run_case_group", fake_run_case_group)
+    monkeypatch.setattr(
+        "yini_test.runner.detect_parser_version", lambda adapter_tokens: "not detected"
+    )
+
+    # Act.
+    exit_code = run_suite_matrix(
+        "all", ["lenient", "strict"], tmp_path, [sys.executable], fail_fast=fail_fast
+    )
+
+    # Assert.
+    output = capsys.readouterr().out
+    assert exit_code == 1
+    assert fail_fast_values == [fail_fast] * len(calls)
+    assert "Result:  FAIL" in output
+    assert "- smoke / strict: 1 failed" in output
+    if fail_fast:
+        assert calls == [("smoke", "lenient"), ("smoke", "strict")]
+        assert "golden" not in output
+        assert "Summary: 2 passed, 1 failed, 3 total" in output
+    else:
+        assert calls == [
+            ("smoke", "lenient"),
+            ("smoke", "strict"),
+            ("golden", "lenient"),
+            ("golden", "strict"),
+        ]
+        assert "Summary: 4 passed, 1 failed, 5 total" in output
