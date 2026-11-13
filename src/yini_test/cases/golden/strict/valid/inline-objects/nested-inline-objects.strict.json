@@ -4,7 +4,8 @@
       "name": "api",
       "cache": {
         "enabled": true,
-        "maxMb": 256
+        "maxMb": 256,
+        "hex": 10
       },
       "limits": {
         "retryCount": 3,

@@ -6,6 +6,7 @@
 - **Fixed:** Aligned mode-declaration cases with the latest RC.6x / RC.7 WIP rules: `@yini lenient` in strict mode now requires a warning and successful strict validation; `@yini strict` in lenient mode still requires rejection.
 - **Added:** Strict invalid cases with a lenient declaration and either a trailing list comma or a missing `/END` terminator.
 - **Added:** Deprecation-warning checks for `%` binary literals in both modes and in lenient concatenation. Existing parsed values are unchanged.
+- **Added:** A case with regression coverage for an inline-object key named `hex` using compact `hex:10` syntax in both modes, expecting decimal `10` while retaining hexadecimal-prefix coverage.
 
 ## 0.3.0rc2 - 2026 November
 - **Fixed:** Updated case expectations for the RC.6x / RC.7 WIP specification: duplicate sections and mode-declaration mismatches now require parsing to fail.
