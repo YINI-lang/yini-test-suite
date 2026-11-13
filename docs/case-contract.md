@@ -175,9 +175,20 @@ with matching JSON output and warning expectations. The current missing-value
 fixtures match the diagnostic phrase `empty value`.
 
 Some warnings are only SHOULD-level in the YINI specification, such as empty
-documents, misplaced shebang-like lines, and mixed line endings in lenient mode.
+documents, misplaced shebang-like lines, mixed line endings in lenient mode,
+and deprecated `%` binary prefixes in either mode.
 This corpus deliberately requires those warnings too. Cases covering them also
 belong under `warning/`.
+
+The `%` form remains valid and has the same value as `0b`. Its warning fixtures
+match `%`, `deprecated`, and `0b` in `stderr` to check the deprecation diagnostic
+and the recommendation to use `0b` without requiring a complete message.
+
+A document declaring `@yini lenient` and parsed in strict mode requires a
+mode-mismatch warning and must still pass all strict-mode checks. A document
+declaring `@yini strict` and parsed in lenient mode must fail. The successful
+strict-mode mismatch fixture matches `lenient` and `strict` in `stderr` so that
+the diagnostic identifies both modes without requiring a parser-specific code.
 
 ---
 

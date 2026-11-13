@@ -1,0 +1,7 @@
+@yini lenient
+
+^ Document
+name = "lenient-declaration-without-end-marker"
+
+// INVALID: The declaration does not switch the active strict mode.
+// Strict validation still requires the document terminator /END.

@@ -1,0 +1,11 @@
+[
+    {
+        "contains": "%"
+    },
+    {
+        "contains": "deprecated"
+    },
+    {
+        "contains": "0b"
+    }
+]

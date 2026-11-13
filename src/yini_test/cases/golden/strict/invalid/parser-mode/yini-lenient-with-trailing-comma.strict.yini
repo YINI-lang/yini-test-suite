@@ -1,0 +1,8 @@
+@yini lenient
+
+^ Lists
+// INVALID: The declaration does not switch the active strict mode.
+// Strict validation rejects a trailing comma even after a mode-mismatch warning.
+items = [1, 2,]
+
+/END
