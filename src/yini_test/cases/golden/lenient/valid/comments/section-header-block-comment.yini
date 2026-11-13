@@ -1,10 +1,10 @@
 @yini
 
-^ Root /* note */
-rootValue = 1
+^ Root /* note
+*/ rootValue = 1
 
 ^^CompactChild /* note */
 value = 2
 
-^2 NumberedChild /* note */
-value = 3
+^2 NumberedChild /* note
+*/ value = 3
