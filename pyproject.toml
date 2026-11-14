@@ -25,8 +25,9 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/YINI-lang/yini-test-suite"
+Homepage = "https://yini-lang.org/?utm_source=pypi&utm_campaign=yini_test&utm_content=pyproject&utm_medium=referral"
 Repository = "https://github.com/YINI-lang/yini-test-suite"
+Specification = "https://yini-lang.org/refs/specification?utm_source=pypi&utm_campaign=yini_test&utm_content=pyproject&utm_medium=referral"
 Issues = "https://github.com/YINI-lang/yini-test-suite/issues"
 Changelog = "https://github.com/YINI-lang/yini-test-suite/blob/main/CHANGELOG.md"
 
