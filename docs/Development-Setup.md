@@ -261,7 +261,7 @@ defines and runs the shared adapter contract.
 The runner starts by printing the package name and version:
 
 ```text
-yini-test-suite 0.3.0rc2
+yini-test-suite 0.4.0rc1
 ```
 
 The default runner output prints `PASS`, `FAIL`, and the final summary. Add
@@ -296,10 +296,10 @@ when it can be detected, YINI spec revision, and selected suite:
 
 ```text
 YINI Test Suite Summary
-yini-test-suite: 0.3.0rc2
+yini-test-suite: 0.4.0rc1
 Adapter: yini-parser-typescript
 Parser version: 1.6.1
-YINI spec: 1.0.0-RC.6x
+YINI spec: 1.0.0-RC.7
 Test suite: "all"
 ```
 

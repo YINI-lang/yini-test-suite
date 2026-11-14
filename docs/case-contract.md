@@ -58,7 +58,7 @@ The manifest declares metadata that applies to the full packaged case corpus, in
 Example:
 ```json
 {
-    "yini_spec_revision": "1.0.0-RC.6x",
+    "yini_spec_revision": "1.0.0-RC.7",
     "description": "YINI spec revision targeted by this packaged test corpus."
 }
 ```

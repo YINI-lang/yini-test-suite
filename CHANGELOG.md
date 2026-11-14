@@ -2,14 +2,15 @@
 
 **Changelog** for `yini-test-suite`.
 
-## Upcoming
-- **Fixed:** Aligned mode-declaration cases with the latest RC.6x / RC.7 WIP rules: `@yini lenient` in strict mode now requires a warning and successful strict validation; `@yini strict` in lenient mode still requires rejection.
-- **Added:** Strict invalid cases with a lenient declaration and either a trailing list comma or a missing `/END` terminator.
-- **Added:** Deprecation-warning checks for `%` binary literals in both modes and in lenient concatenation. Existing parsed values are unchanged.
-- **Added:** A case with regression coverage for an inline-object key named `hex` using compact `hex:10` syntax in both modes, expecting decimal `10` while retaining hexadecimal-prefix coverage.
+## 0.4.0rc1 - 2026 November
+- **Fixed:** Aligned with the latest YINI Spec RC7 rules:
+  * **Updated**: `@yini lenient` in strict mode now requires a warning and successful strict validation; `@yini strict` in lenient mode still requires rejection.
+  * **Added:** Strict invalid cases with a lenient declaration and either a trailing list comma or a missing `/END` terminator.
+  * **Added:** Deprecation-warning checks for `%` binary literals in both modes and in lenient concatenation. Existing parsed values are unchanged.
+  * **Added:** A case with regression coverage for an inline-object key named `hex` using compact `hex:10` syntax in both modes, expecting decimal `10` while retaining hexadecimal-prefix coverage.
 
 ## 0.3.0rc2 - 2026 November
-- **Fixed:** Updated case expectations for the RC.6x / RC.7 WIP specification: duplicate sections and mode-declaration mismatches now require parsing to fail.
+- **Fixed:** Updated case expectations for the RC.6x specification: duplicate sections and mode-declaration mismatches now require parsing to fail.
 - **Fixed:** Corrected nine JSON expectations to use LF for source line endings in multiline string values.
 - **Fixed:** Restored mixed line endings in two fixtures and added Git attributes and regression tests to preserve their source bytes.
 - **Fixed:** CRLF, LF, and CR fixtures are now pinned in `.gitattributes` so Git cannot convert their line endings. Previously, the CRLF fixtures were stored with LF, so on non-Windows checkouts they did not test CRLF. A corpus test now checks the line endings of each such fixture.
