@@ -180,6 +180,11 @@ Check built package metadata:
 task package-check
 ```
 
+This checks existing files in `dist/`; it does not build them first. Run
+`task build` before checking a new version. If you used a custom build output
+directory, run `python -m twine check --strict "path/to/output/*"` for that
+directory instead.
+
 Direct equivalents:
 
 ```bash
