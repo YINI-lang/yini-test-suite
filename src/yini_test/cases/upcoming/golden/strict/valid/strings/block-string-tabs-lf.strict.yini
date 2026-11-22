@@ -1,0 +1,9 @@
+@yini strict
+
+^ Strings
+text = b"""
+  	first
+  second	part
+"""
+
+/END

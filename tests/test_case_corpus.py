@@ -1,3 +1,4 @@
+import json
 from pathlib import Path
 import re
 
@@ -62,3 +63,55 @@ def test_single_line_ending_cases_use_only_their_line_ending(
     assert line_endings == {expected_line_ending}, (
         f"Fixture does not use only {expected_line_ending!r} line endings: {case_path}"
     )
+
+
+@pytest.mark.parametrize("mode", ["lenient", "strict"])
+@pytest.mark.parametrize(
+    ("ending_name", "line_ending"),
+    [("lf", b"\n"), ("crlf", b"\r\n"), ("cr", b"\r")],
+)
+def test_upcoming_block_string_valid_fixture_bytes(
+    mode: str, ending_name: str, line_ending: bytes
+) -> None:
+    # 1. Arrange.
+    cases_root = Path(__file__).resolve().parents[1] / "src/yini_test/cases"
+    suffix = ".strict" if mode == "strict" else ""
+    folder = cases_root / "upcoming/golden" / mode / "valid/strings"
+    case = folder / f"block-string-tabs-{ending_name}{suffix}.yini"
+
+    # 2. Act.
+    source = case.read_bytes()
+    expected = json.loads(case.with_suffix(".json").read_bytes())
+
+    # 3. Assert.
+    assert set(re.findall(rb"\r\n|\r|\n", source)) == {line_ending}
+    assert b"  \tfirst" + line_ending + b"  second\tpart" in source
+    assert expected == {"Strings": {"text": "\tfirst\nsecond\tpart"}}
+
+
+@pytest.mark.parametrize("mode", ["lenient", "strict"])
+def test_upcoming_block_string_invalid_fixtures_cover_each_control(mode: str) -> None:
+    # 1. Arrange.
+    cases_root = Path(__file__).resolve().parents[1] / "src/yini_test/cases"
+    folder = cases_root / "upcoming/golden" / mode
+    suffix = ".strict" if mode == "strict" else ""
+    valid = folder / "valid/strings" / f"block-string-tabs-lf{suffix}.yini"
+    forbidden = set(range(32)) - {9, 10, 13}
+
+    # 2. Act.
+    baseline = valid.read_bytes()
+    invalid = {
+        path.name: path.read_bytes()
+        for path in (folder / "invalid/strings").glob("block-string-u*.yini")
+    }
+
+    # 3. Assert.
+    assert set(invalid) == {
+        f"block-string-u{code_point:04x}{suffix}.yini" for code_point in forbidden
+    }
+    for code_point in forbidden:
+        name = f"block-string-u{code_point:04x}{suffix}.yini"
+        expected = baseline.replace(
+            b"second\tpart", b"second" + bytes([code_point]) + b"part"
+        )
+        assert invalid[name] == expected, name

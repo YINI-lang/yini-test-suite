@@ -19,3 +19,7 @@ src/yini_test/cases/golden/lenient/valid/strings/raw-triple-quoted-cr-source.yin
 src/yini_test/cases/golden/strict/valid/strings/raw-triple-quoted-cr-source.strict.yini -text
 src/yini_test/cases/golden/lenient/valid/strings/escaped-triple-quoted-crlf-source.yini -text whitespace=cr-at-eol
 src/yini_test/cases/golden/strict/valid/strings/escaped-triple-quoted-crlf-source.strict.yini -text whitespace=cr-at-eol
+
+# Keep literal control bytes and line endings in the upcoming Block String cases.
+src/yini_test/cases/upcoming/golden/*/valid/strings/block-string-tabs-*.yini -text whitespace=cr-at-eol,-space-before-tab
+src/yini_test/cases/upcoming/golden/*/invalid/strings/block-string-u*.yini -text whitespace=-space-before-tab
