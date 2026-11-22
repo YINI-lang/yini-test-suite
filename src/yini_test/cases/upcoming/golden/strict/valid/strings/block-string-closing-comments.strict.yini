@@ -1,0 +1,24 @@
+@yini strict
+
+^ Strings
+slashNote = b"""
+  Hello
+""" // A comment
+
+hashNote = b"""
+  Hello
+""" # A comment
+
+message = b"""
+  Hello
+""" + /* Add punctuation. */ "!"
+
+items = [
+  b"""
+    one
+  """, /* The next item
+          is on the following line. */
+  "two"
+]
+
+/END

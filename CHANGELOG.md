@@ -4,6 +4,8 @@
 
 ## Unreleased/Upcoming -
 
+- **Added:** Strict and lenient golden cases for comments after Block String closing quotes, after a concatenation operator, and after a list comma.
+
 - **Added:** Upcoming Block String cases in both modes check that literal tabs survive, LF, CRLF, and CR become LF between content lines, and each of the other 29 characters in `U+0000` through `U+001F` causes a parse error. Run them with `golden --all-modes --cases-root src/yini_test/cases/upcoming` and your adapter.
 
 ## 0.4.0rc1 - 2026 November

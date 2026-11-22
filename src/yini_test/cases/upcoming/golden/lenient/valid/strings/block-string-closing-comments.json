@@ -1,0 +1,11 @@
+{
+    "Strings": {
+        "slashNote": "Hello",
+        "hashNote": "Hello",
+        "message": "Hello!",
+        "items": [
+            "one",
+            "two"
+        ]
+    }
+}

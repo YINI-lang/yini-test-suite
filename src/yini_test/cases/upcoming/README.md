@@ -1,11 +1,12 @@
 # Upcoming Block String cases
 
-These 64 golden cases cover the agreed Block String control-character rules
-for the upcoming YINI specification. They use the `b` prefix.
+These 66 golden cases cover Block Strings in the upcoming YINI specification.
+They use the `b` prefix.
 
-Each parsing mode has three valid cases. Their source line endings are LF,
-CRLF, and CR. Each expects LF between content lines and preserves literal tabs
-after removing the ASCII-space margin.
+Each mode has four valid cases. Three check that LF, CRLF, and CR between
+content lines become LF and that literal tabs survive indentation removal.
+The fourth checks `//` and `#` after the closing quotes, a block comment
+after `+`, and a multiline block comment after a list comma.
 
 Each mode also has 29 invalid cases, one for each literal character from
 `U+0000` through `U+001F` except tab, LF, and CR. Each file contains one
