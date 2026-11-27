@@ -1,0 +1,5 @@
+// INVALID: A colon assignment requires an explicit value, including at EOF.
+@yini
+
+^ Keys
+key: # Only a comment follows.

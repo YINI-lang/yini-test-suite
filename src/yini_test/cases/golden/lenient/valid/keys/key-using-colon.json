@@ -1,0 +1,23 @@
+{
+    "root": "value",
+    "hex": 10,
+    "color": 16,
+    "Keys": {
+        "key": "value",
+        "canonical": "value",
+        "compact": 3,
+        "flag": true,
+        "nothing": null,
+        "items": [
+            1,
+            2
+        ],
+        "object": {
+            "enabled": true,
+            "hex": 10
+        },
+        "hex": 10,
+        "color": 16,
+        "spaced key": "value"
+    }
+}
