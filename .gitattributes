@@ -23,3 +23,7 @@ src/yini_test/cases/golden/strict/valid/strings/escaped-triple-quoted-crlf-sourc
 # Keep literal control bytes and line endings in the Block String cases.
 src/yini_test/cases/golden/*/valid/strings/block-string-tabs-*.yini -text whitespace=cr-at-eol,-space-before-tab
 src/yini_test/cases/golden/*/invalid/strings/block-string-u*.yini -text whitespace=-space-before-tab
+
+# These inputs contain literal NUL, DEL, or C1 characters.
+src/yini_test/cases/golden/*/invalid/strings/*-literal-nul*.yini -text
+src/yini_test/cases/golden/*/valid/strings/literal-string-controls*.yini -text

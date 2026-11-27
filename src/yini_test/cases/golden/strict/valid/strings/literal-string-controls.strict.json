@@ -1,0 +1,8 @@
+{
+    "Strings": {
+        "raw": "a\t\u007f\u0085b",
+        "escaped": "a\t\u007f\u0085b",
+        "rawTriple": "a\t\u007f\u0085b",
+        "escapedTriple": "a\t\u007f\u0085b"
+    }
+}

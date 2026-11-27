@@ -1,0 +1,10 @@
+@yini strict
+
+^ Strings
+// Each value contains a literal tab, DEL, and U+0085 (NEXT LINE).
+raw = "a	b"
+escaped = E"a	b"
+rawTriple = """a	b"""
+escapedTriple = E"""a	b"""
+
+/END

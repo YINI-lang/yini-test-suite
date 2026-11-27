@@ -1,5 +1,5 @@
 {
     "Strings": {
-        "script": "first\nsecond"
+        "script": "first\u007f\u0085\nsecond"
     }
 }

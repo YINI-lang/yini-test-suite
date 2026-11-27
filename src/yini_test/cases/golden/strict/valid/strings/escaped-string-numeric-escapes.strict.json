@@ -6,6 +6,11 @@
         "astral": "😀",
         "octal": "Aÿ",
         "nulOctal": "a\u0000b",
-        "nul": "a\u0000b"
+        "nul": "a\u0000b",
+        "octalLf": "\n",
+        "nulThenDigits": "\u000012",
+        "octalThenDigit": "ÿ0",
+        "nulThenUnicodeDigit": "\u0000٢",
+        "octalThenUnicodeDigit": "\u0007٢"
     }
 }

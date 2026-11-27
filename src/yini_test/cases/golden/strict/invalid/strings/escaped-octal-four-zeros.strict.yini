@@ -1,0 +1,6 @@
+@yini strict
+
+^ Strings
+value = E"\o0000"
+
+/END

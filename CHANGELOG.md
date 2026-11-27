@@ -4,6 +4,8 @@
 
 ## Unreleased/Upcoming RC.7x -
 
+- **Added:** Golden cases in both modes reject literal NUL (U+0000, the control character with numeric value zero) in single-line and triple-quoted Raw and Escaped Strings. Write `e"\0"` to produce a string containing one NUL character. The cases also check that string values preserve tab, DEL, and U+0085.
+- **Added:** Golden cases reject an octal escape with four digits or a value above `377` octal, and reject an ASCII digit after `\0`. Valid examples cover LF, NUL followed by digits, and a non-ASCII digit immediately after an escape.
 - **Changed:** Reclassified the lenient `key-using-colon` golden case as valid with expected JSON. It covers root-level and section-level assignments, mixed separators, scalar and compound values, backticked keys, and `hex:10` in member and value positions. Strict section assignments still require `=`. Parser support is deferred.
 - **Added:** Lenient rejection cases for a colon assignment without a value at EOF, an unbracketed list, and a list beginning on the next line.
 - **Changed:** Missing and comment-only assignment values now require parse errors in both modes. Reclassified the dedicated lenient warning cases as invalid and updated successful configuration examples to use explicit `null` values.
