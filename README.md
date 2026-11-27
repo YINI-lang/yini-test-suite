@@ -27,6 +27,10 @@ specification snapshots, including the earlier draft. The packaged
 [case manifest](./src/yini_test/cases/manifest.json) records the current target.
 The runner prints that target in its summary.
 
+The unreleased source corpus targets `1.0.0-RC.7x` and includes the former
+`upcoming` cases in normal suite runs. Released suite versions retain the
+targets listed above.
+
 ---
 
 ## 📦 Install
@@ -196,7 +200,7 @@ YINI Test Suite Summary
 yini-test-suite: 0.4.0rc1
 Adapter: yini-parser-typescript
 Parser version: 1.7.0
-YINI spec: 1.0.0-RC.7
+YINI spec: 1.0.0-RC.7x
 Test suite: "all"
 ```
 

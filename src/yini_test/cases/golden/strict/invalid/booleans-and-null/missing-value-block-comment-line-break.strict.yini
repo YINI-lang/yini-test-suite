@@ -1,0 +1,5 @@
+// Missing values and invalid literals are errors in both modes.
+^ Config
+value = /*
+*/ 1
+/END

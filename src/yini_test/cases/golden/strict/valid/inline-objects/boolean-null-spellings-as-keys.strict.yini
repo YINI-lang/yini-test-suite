@@ -22,7 +22,11 @@ spellings = {
     nO: 18,
     oN: 19,
     OfF: 20,
-    NuLl: 21
+    NuLl: 21,
+    none: 22,
+    None: 23,
+    NONE: 24,
+    nOnE: 25
 }
 
 /END

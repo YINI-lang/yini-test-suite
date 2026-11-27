@@ -25,7 +25,7 @@ More detailed and exhaustive syntax and behavior coverage should be handled by g
 The lenient-mode YINI files aim to include:
 - The use of both double-quoted `"` and single-quoted `'` strings.
 - The set tries to include files both with the YINI directive `@yini`, and without.
-- At least one member with an empty value (= implicit `null`), stored under `warning/` with an expected warning diagnostic.
+- Explicit `null` values in successful configuration examples. Missing values are errors in both modes; golden cases cover their rejection.
 
 ---
 

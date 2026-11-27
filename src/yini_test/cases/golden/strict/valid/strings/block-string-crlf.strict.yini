@@ -1,0 +1,9 @@
+@yini strict
+
+^ Strings
+script = block"""
+  first
+  second
+"""
+
+/END

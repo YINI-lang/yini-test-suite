@@ -1,0 +1,5 @@
+^ Parent
+^^ Empty
+// A comment is not a member.
+--value = 1
+/* Still empty. */

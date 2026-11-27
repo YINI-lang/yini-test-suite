@@ -1,6 +1,0 @@
-@yini
-
-^ Strings
-script = command"""
-  first
-""" trailing

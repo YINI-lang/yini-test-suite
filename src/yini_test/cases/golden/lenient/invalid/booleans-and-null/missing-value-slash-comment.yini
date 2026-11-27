@@ -1,0 +1,3 @@
+// Missing values and invalid literals are errors in both modes.
+^ Config
+value = // No value follows the equals sign.

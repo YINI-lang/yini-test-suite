@@ -1,0 +1,6 @@
+@yini
+
+^ Strings
+script = block"""
+  first
+""" trailing

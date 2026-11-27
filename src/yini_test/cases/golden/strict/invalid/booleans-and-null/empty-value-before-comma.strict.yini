@@ -2,7 +2,7 @@
 
 ^ Values
 // INVALID: A comma with no preceding value is an error in both modes.
-// It is not a missing value, so it does not become null in lenient mode.
+// A comma cannot supply a value; missing values are errors in both modes.
 key = ,
 
 /END

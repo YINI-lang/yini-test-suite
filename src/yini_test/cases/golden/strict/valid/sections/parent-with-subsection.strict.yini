@@ -1,0 +1,4 @@
+^ Parent
+^^ Child
+value = 1
+/END
