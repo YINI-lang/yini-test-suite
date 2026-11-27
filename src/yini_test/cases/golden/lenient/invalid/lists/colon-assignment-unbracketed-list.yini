@@ -1,0 +1,5 @@
+// INVALID: A list value requires brackets, including after a lenient : separator.
+@yini
+
+^ Lists
+items: 1, 2

@@ -4,6 +4,8 @@
 
 ## Unreleased/Upcoming RC.7x -
 
+- **Changed:** Reclassified the lenient `key-using-colon` golden case as valid with expected JSON. It covers root-level and section-level assignments, mixed separators, scalar and compound values, backticked keys, and `hex:10` in member and value positions. Strict section assignments still require `=`. Parser support is deferred.
+- **Added:** Lenient rejection cases for a colon assignment without a value at EOF, an unbracketed list, and a list beginning on the next line.
 - **Changed:** Missing and comment-only assignment values now require parse errors in both modes. Reclassified the dedicated lenient warning cases as invalid and updated successful configuration examples to use explicit `null` values.
 - **Changed:** Migrated Command String fixtures to Block Strings using the `block` prefix, retaining indentation and line-ending coverage. Added rejection cases for the removed `command` prefix in both modes.
 - **Added:** Cases for the case-insensitive `None` null alias, required assignment values, and empty sections with recommended warnings. Parent sections containing subsections remain valid without an empty-section warning.

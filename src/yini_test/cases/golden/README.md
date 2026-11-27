@@ -28,6 +28,12 @@ Yet more exhaustive and specification-level coverage should be handled by dedica
 These cases run as part of the normal golden and full suites. The corpus target
 is declared in [the case manifest](../manifest.json).
 
+Lenient root-level and section-level assignments accept `:` as an alternative
+to canonical `=`. The `keys/key-using-colon` cases distinguish lenient acceptance
+from strict rejection. Lenient negative cases cover missing values, unbracketed
+lists, and a list beginning on the next line. These expectations target the
+updated specification ahead of parser support.
+
 Missing and comment-only assignment values must fail in both modes.
 Case-insensitive `None` is a null alias; `null` remains the canonical spelling.
 Neither `-` nor `~` is a null alias. Null cases also cover case-sensitive keyword

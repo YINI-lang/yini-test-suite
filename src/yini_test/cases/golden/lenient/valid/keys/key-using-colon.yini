@@ -1,0 +1,18 @@
+@yini
+
+// Lenient assignments accept : with the same meaning as canonical =.
+root: "value"
+hex:10
+color = hex:10
+
+^ Keys
+key: "value"
+canonical = "value"
+compact:3
+flag: true
+nothing: null
+items: [1, 2]
+object: { enabled: true, hex:10 }
+hex:10
+color:hex:10
+`spaced key`: "value"

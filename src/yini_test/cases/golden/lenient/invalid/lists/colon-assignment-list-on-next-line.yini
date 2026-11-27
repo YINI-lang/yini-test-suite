@@ -1,0 +1,6 @@
+// INVALID: The opening [ must be on the same logical line as the assignment separator.
+@yini
+
+^ Lists
+items:
+[1, 2]
