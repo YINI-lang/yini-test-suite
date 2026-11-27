@@ -1,0 +1,3 @@
+// Missing values and invalid literals are errors in both modes.
+^ Config
+color = #FF9900

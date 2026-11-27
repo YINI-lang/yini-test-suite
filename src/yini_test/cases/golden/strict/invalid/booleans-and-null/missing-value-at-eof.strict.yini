@@ -1,0 +1,3 @@
+// This EOF case has both a missing value and a missing /END terminator.
+^ Config
+value =

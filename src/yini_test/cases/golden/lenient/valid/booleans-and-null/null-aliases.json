@@ -1,0 +1,35 @@
+{
+    "Config": {
+        "nullValue": null,
+        "lower": null,
+        "title": null,
+        "upper": null,
+        "mixed": null,
+        "none": 1,
+        "None": 2,
+        "NONE": 3,
+        "nOnE": 4,
+        "quoted": [
+            "none",
+            "None",
+            "NONE",
+            "nOnE"
+        ],
+        "items": [
+            null,
+            null,
+            null,
+            null
+        ],
+        "object": {
+            "none": null,
+            "None": null,
+            "NONE": null,
+            "nOnE": null
+        },
+        "emptyString": "",
+        "emptySingleQuoted": "",
+        "emptyList": [],
+        "emptyObject": {}
+    }
+}

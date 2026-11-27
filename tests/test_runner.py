@@ -375,7 +375,7 @@ def test_run_suite_matrix_runs_groups_in_suite_then_mode_order(
     assert "Parser version: not detected" in output
     assert "yini-test-suite: 0.4.0rc1" in output
     assert 'Test suite: "all"' in output
-    assert "YINI spec: 1.0.0-RC.7" in output
+    assert "YINI spec: 1.0.0-RC.7x" in output
     assert "PASS  " in output
     assert "RUN   " not in output
     assert "smoke    lenient" in output
@@ -391,9 +391,9 @@ def test_run_suite_matrix_runs_groups_in_suite_then_mode_order(
         "Parser version: not detected"
     )
     assert output.index("Parser version: not detected") < output.index(
-        "YINI spec: 1.0.0-RC.7"
+        "YINI spec: 1.0.0-RC.7x"
     )
-    assert output.index("YINI spec: 1.0.0-RC.7") < output.index('Test suite: "all"')
+    assert output.index("YINI spec: 1.0.0-RC.7x") < output.index('Test suite: "all"')
 
 
 def test_run_suite_matrix_summary_lists_failed_groups(
@@ -455,7 +455,7 @@ def test_run_suite_matrix_summary_lists_failed_groups(
     assert "Parser version: 1.6.0" in output
     assert "yini-test-suite: 0.4.0rc1" in output
     assert 'Test suite: "all"' in output
-    assert "YINI spec: 1.0.0-RC.7" in output
+    assert "YINI spec: 1.0.0-RC.7x" in output
     assert "Summary: 3 passed, 1 failed, 4 total" in output
     assert "Result:  FAIL" in output
     assert "Failed groups:" in output
@@ -766,7 +766,7 @@ def test_get_yini_spec_revision_reads_packaged_case_manifest() -> None:
     revision = get_yini_spec_revision()
 
     # Assert.
-    assert revision == "1.0.0-RC.7"
+    assert revision == "1.0.0-RC.7x"
 
 
 @pytest.mark.parametrize(

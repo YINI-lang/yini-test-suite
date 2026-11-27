@@ -58,7 +58,7 @@ The manifest declares metadata that applies to the full packaged case corpus, in
 Example:
 ```json
 {
-    "yini_spec_revision": "1.0.0-RC.7",
+    "yini_spec_revision": "1.0.0-RC.7x",
     "description": "YINI spec revision targeted by this packaged test corpus."
 }
 ```
@@ -169,10 +169,15 @@ Example:
 
 Each `contains` value must appear somewhere in the adapter's `stderr`.
 
-Lenient-mode root-level or section-level members with no value after `=` become
-`null` and require a warning. Cases covering this behavior belong under `warning/`,
-with matching JSON output and warning expectations. The current missing-value
-fixtures match the diagnostic phrase `empty value`.
+The current RC.7x corpus requires explicit assignment values in both modes.
+Missing and comment-only values are errors and belong under `invalid/`, without
+expected-output or warning sidecars. Case-insensitive `None` is a null alias;
+`null` remains the canonical spelling.
+
+Empty sections contain neither members nor subsections and are valid in both
+modes. Their cases deliberately require the recommended warning, following
+the SHOULD-level warning policy below. A parent containing subsections is not
+empty.
 
 Some warnings are only SHOULD-level in the YINI specification, such as empty
 documents, misplaced shebang-like lines, mixed line endings in lenient mode,
@@ -228,7 +233,7 @@ For valid cases, `yini-test-suite` compares the parsed JSON values, not raw text
 Expected `.json` SHOULD still be pretty-formatted (using 4-space indentation) so it's nicer for humans to read during debugging and development.
 
 Source line endings in multiline string values become LF (`\n`) in both modes,
-including Raw and Escaped Triple-Quoted Strings and Command Strings. Expected JSON
+including Raw and Escaped Triple-Quoted Strings and Block Strings. Expected JSON
 must reflect this normalization. Characters produced by escape sequences, such as
 `E"\r\n"`, retain their values.
 

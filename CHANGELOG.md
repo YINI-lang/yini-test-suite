@@ -2,13 +2,16 @@
 
 **Changelog** for `yini-test-suite`.
 
-## Unreleased/Upcoming -
+## Unreleased/Upcoming RC.7x -
 
+- **Changed:** Missing and comment-only assignment values now require parse errors in both modes. Reclassified the dedicated lenient warning cases as invalid and updated successful configuration examples to use explicit `null` values.
+- **Changed:** Migrated Command String fixtures to Block Strings using the `block` prefix, retaining indentation and line-ending coverage. Added rejection cases for the removed `command` prefix in both modes.
+- **Added:** Cases for the case-insensitive `None` null alias, required assignment values, and empty sections with recommended warnings. Parent sections containing subsections remain valid without an empty-section warning.
+- **Added:** Block String cases in both modes check that literal tabs survive, LF, CRLF, and CR become LF between content lines, and each of the other 29 characters in `U+0000` through `U+001F` causes a parse error. Git attributes and corpus tests preserve the fixtures' literal bytes.
 - **Added:** Strict and lenient golden cases for comments after Block String closing quotes, after a concatenation operator, and after a list comma.
+- **Added:** Lowercase, title-case, uppercase, and mixed-case `None` keys in the existing Boolean/null key fixtures for both modes.
 
-- **Added:** Upcoming Block String cases in both modes check that literal tabs survive, LF, CRLF, and CR become LF between content lines, and each of the other 29 characters in `U+0000` through `U+001F` causes a parse error. Run them with `golden --all-modes --cases-root src/yini_test/cases/upcoming` and your adapter.
-
-## 0.4.0rc1 - 2026 November
+## 0.4.0rc1 (RC.7) - 2026 November
 - **Fixed:** Aligned with the latest YINI Spec RC7 rules:
   * **Updated**: `@yini lenient` in strict mode now requires a warning and successful strict validation; `@yini strict` in lenient mode still requires rejection.
   * **Added:** Strict invalid cases with a lenient declaration and either a trailing list comma or a missing `/END` terminator.

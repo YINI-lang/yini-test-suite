@@ -11,8 +11,8 @@ src/yini_test/cases/golden/lenient/valid/encoding/crlf-line-endings.yini -text w
 src/yini_test/cases/golden/strict/valid/encoding/crlf-line-endings.strict.yini -text whitespace=cr-at-eol
 src/yini_test/cases/golden/lenient/valid/encoding/cr-line-endings.yini -text
 src/yini_test/cases/golden/strict/valid/encoding/cr-line-endings.strict.yini -text
-src/yini_test/cases/golden/lenient/valid/strings/command-string-crlf.yini -text whitespace=cr-at-eol
-src/yini_test/cases/golden/strict/valid/strings/command-string-crlf.strict.yini -text whitespace=cr-at-eol
+src/yini_test/cases/golden/lenient/valid/strings/block-string-crlf.yini -text whitespace=cr-at-eol
+src/yini_test/cases/golden/strict/valid/strings/block-string-crlf.strict.yini -text whitespace=cr-at-eol
 src/yini_test/cases/golden/lenient/valid/strings/raw-triple-quoted-crlf-source.yini -text whitespace=cr-at-eol
 src/yini_test/cases/golden/strict/valid/strings/raw-triple-quoted-crlf-source.strict.yini -text whitespace=cr-at-eol
 src/yini_test/cases/golden/lenient/valid/strings/raw-triple-quoted-cr-source.yini -text
@@ -20,6 +20,6 @@ src/yini_test/cases/golden/strict/valid/strings/raw-triple-quoted-cr-source.stri
 src/yini_test/cases/golden/lenient/valid/strings/escaped-triple-quoted-crlf-source.yini -text whitespace=cr-at-eol
 src/yini_test/cases/golden/strict/valid/strings/escaped-triple-quoted-crlf-source.strict.yini -text whitespace=cr-at-eol
 
-# Keep literal control bytes and line endings in the upcoming Block String cases.
-src/yini_test/cases/upcoming/golden/*/valid/strings/block-string-tabs-*.yini -text whitespace=cr-at-eol,-space-before-tab
-src/yini_test/cases/upcoming/golden/*/invalid/strings/block-string-u*.yini -text whitespace=-space-before-tab
+# Keep literal control bytes and line endings in the Block String cases.
+src/yini_test/cases/golden/*/valid/strings/block-string-tabs-*.yini -text whitespace=cr-at-eol,-space-before-tab
+src/yini_test/cases/golden/*/invalid/strings/block-string-u*.yini -text whitespace=-space-before-tab

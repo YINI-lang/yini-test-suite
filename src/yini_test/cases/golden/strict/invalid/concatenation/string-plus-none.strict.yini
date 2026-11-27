@@ -1,0 +1,4 @@
+// Strict concatenation requires string operands.
+^ Config
+value = "value-" + None
+/END

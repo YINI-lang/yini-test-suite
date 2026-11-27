@@ -32,8 +32,8 @@ def test_mixed_line_ending_cases_contain_multiple_source_line_endings(
         ("golden/strict/valid/encoding/crlf-line-endings.strict.yini", b"\r\n"),
         ("golden/lenient/valid/encoding/cr-line-endings.yini", b"\r"),
         ("golden/strict/valid/encoding/cr-line-endings.strict.yini", b"\r"),
-        ("golden/lenient/valid/strings/command-string-crlf.yini", b"\r\n"),
-        ("golden/strict/valid/strings/command-string-crlf.strict.yini", b"\r\n"),
+        ("golden/lenient/valid/strings/block-string-crlf.yini", b"\r\n"),
+        ("golden/strict/valid/strings/block-string-crlf.strict.yini", b"\r\n"),
         ("golden/lenient/valid/strings/raw-triple-quoted-crlf-source.yini", b"\r\n"),
         (
             "golden/strict/valid/strings/raw-triple-quoted-crlf-source.strict.yini",
@@ -70,13 +70,13 @@ def test_single_line_ending_cases_use_only_their_line_ending(
     ("ending_name", "line_ending"),
     [("lf", b"\n"), ("crlf", b"\r\n"), ("cr", b"\r")],
 )
-def test_upcoming_block_string_valid_fixture_bytes(
+def test_block_string_valid_fixture_bytes(
     mode: str, ending_name: str, line_ending: bytes
 ) -> None:
     # 1. Arrange.
     cases_root = Path(__file__).resolve().parents[1] / "src/yini_test/cases"
     suffix = ".strict" if mode == "strict" else ""
-    folder = cases_root / "upcoming/golden" / mode / "valid/strings"
+    folder = cases_root / "golden" / mode / "valid/strings"
     case = folder / f"block-string-tabs-{ending_name}{suffix}.yini"
 
     # 2. Act.
@@ -90,10 +90,10 @@ def test_upcoming_block_string_valid_fixture_bytes(
 
 
 @pytest.mark.parametrize("mode", ["lenient", "strict"])
-def test_upcoming_block_string_invalid_fixtures_cover_each_control(mode: str) -> None:
+def test_block_string_invalid_fixtures_cover_each_control(mode: str) -> None:
     # 1. Arrange.
     cases_root = Path(__file__).resolve().parents[1] / "src/yini_test/cases"
-    folder = cases_root / "upcoming/golden" / mode
+    folder = cases_root / "golden" / mode
     suffix = ".strict" if mode == "strict" else ""
     valid = folder / "valid/strings" / f"block-string-tabs-lf{suffix}.yini"
     forbidden = set(range(32)) - {9, 10, 13}
